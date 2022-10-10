@@ -70,11 +70,11 @@ public class Compilador extends javax.swing.JFrame {
         Functions.setLineNumberOnJTextComponent(jtpCode, WIDTH, new Color(243, 139, 168));
         timerKeyReleased = new Timer((int) (1000 * 0.3), (ActionEvent e) -> {
             timerKeyReleased.stop();
-            
+
             int posicion = jtpCode.getCaretPosition();
             jtpCode.setText(jtpCode.getText().replaceAll("[\r]+", ""));
             jtpCode.setCaretPosition(posicion);
-            
+
             colorAnalysis();
         });
         Functions.insertAsteriskInName(this, jtpCode, () -> {
@@ -394,6 +394,52 @@ public class Compilador extends javax.swing.JFrame {
     private void syntacticAnalysis() {
         Grammar gramatica = new Grammar(tokens, errors);
 
+        //Eliminar Errores
+        gramatica.delete(new String[]{"ERROR_0", "ERROR_1"}, 1, " x Error sintáctico {}: No se esperaba el token '[]' [#, %]");
+
+        // Asignación de valores
+        //gramatica.group("VALOR", "(NUMERO_ENTERO | NUMERO_DECIMAL)");
+        gramatica.group("VALOR_ENTERO", "NUMERO_ENTERO", true);
+        gramatica.group("VALOR_DECIMAL", "NUMERO_DECIMAL", true);
+        gramatica.group("VALOR_CADENA", "CADENA", true);
+
+        // Declaración de variables
+        //Errores de declaración de variables 20+
+        gramatica.group("VARIABLE_ERROR", "(TIPO_ENTERO | TIPO_DECIMAL | TIPO_CADENA) ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA)", true, 20,
+                " x Error sintáctico {}: Se debe asignar un identificador [#, %]");//Identificador no asignado
+        gramatica.group("VARIABLE_ERROR", "(TIPO_ENTERO | TIPO_DECIMAL | TIPO_CADENA) IDENTIFICADOR (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA)", true, 21,
+                " x Error sintáctico {}: Se debe utilizar el símbolo de asignación [#, %]");//Sin símbolo de asignación 
+        
+        //Tipo Entero
+        //Errores tipo entero 50+
+        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION VALOR_ENTERO", true);
+        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true, 50,
+                " x Error sintáctico {}: No se puede asignar un valor decimal a un tipo de dato ent [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION", true, 51,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo Decimal
+        //Errores tipo decimal 60+
+        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true);
+        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION VALOR_ENTERO", true, 60,
+                " x Error sintáctico {}: No se puede asignar un valor entero a un tipo de dato dec [#, %]");//TIpos incorrectos
+        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION", true, 61,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo Cadena
+        //Errores tipo cadena 70+
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_CADENA", true);
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_ENTERO", true, 70,
+                " x Error sintáctico {}: No se puede asignar un valor entero a un tipo de dato str [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true, 71,
+                " x Error sintáctico {}: No se puede asignar un valor decimal a un tipo de dato str [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION", true, 71,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        // Declarar tipos de datos
+        gramatica.group("VARIABLE_ERROR", "IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL)", true, 22,
+                " x Error sintáctico {}: Se debe especificar el tipo de dato [#, %]");
+
         /* Mostrar gramáticas */
         gramatica.show();
     }
@@ -495,9 +541,9 @@ public class Compilador extends javax.swing.JFrame {
                 UIManager.setLookAndFeel(new FlatIntelliJLaf());
                 UIManager.put("TitlePane.unifiedBackground", false);
                 UIManager.put("TitlePane.background", new Color(17, 17, 27));
-                UIManager.put("TitlePane.foreground", new Color(183, 189, 248)); 
-                UIManager.put("TitlePane.titleMargins", new Insets( 8,5,8,5 ));
-                
+                UIManager.put("TitlePane.foreground", new Color(183, 189, 248));
+                UIManager.put("TitlePane.titleMargins", new Insets(8, 5, 8, 5));
+
             } catch (UnsupportedLookAndFeelException ex) {
                 System.out.println("LookAndFeel no soportado: " + ex);
             }

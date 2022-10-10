@@ -1,11 +1,3 @@
-,
-;
-:
-while
-for
-if
-ifnot
-&
-|
-!
-!=
+ent ?is = 4
+dec ?id = 5.1
+str ?f = 'test'

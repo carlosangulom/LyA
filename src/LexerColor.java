@@ -64,16 +64,16 @@ class LexerColor {
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\1\1\1\2\1\3\1\1\1\4\22\0\1\1"+
-    "\1\5\4\0\1\6\3\0\1\7\3\0\1\10\1\11"+
-    "\1\12\11\13\3\0\1\14\1\0\1\15\1\0\32\16"+
-    "\4\0\1\16\1\0\3\16\1\17\1\20\1\21\1\16"+
-    "\1\22\1\23\2\16\1\24\1\25\1\26\1\27\2\16"+
-    "\1\30\1\31\1\32\2\16\1\33\3\16\1\0\1\34"+
-    "\10\0\1\3\73\0\1\16\7\0\1\16\3\0\1\16"+
-    "\3\0\1\16\1\0\1\16\6\0\1\16\1\0\1\16"+
-    "\4\0\1\16\7\0\1\16\3\0\1\16\3\0\1\16"+
-    "\1\0\1\16\6\0\1\16\1\0\1\16\u012b\0\2\3"+
-    "\326\0\u0100\3";
+    "\1\5\4\0\1\6\1\7\2\0\1\10\1\11\1\0"+
+    "\1\11\1\12\1\13\1\14\11\15\3\0\1\16\1\0"+
+    "\1\17\1\0\32\20\4\0\1\20\1\0\2\20\1\21"+
+    "\1\22\1\23\1\24\1\20\1\25\1\26\2\20\1\27"+
+    "\1\30\1\31\1\32\2\20\1\33\1\34\1\35\1\36"+
+    "\1\20\1\37\3\20\1\0\1\40\10\0\1\3\73\0"+
+    "\1\20\7\0\1\20\3\0\1\20\3\0\1\20\1\0"+
+    "\1\20\6\0\1\20\1\0\1\20\4\0\1\20\7\0"+
+    "\1\20\3\0\1\20\3\0\1\20\1\0\1\20\6\0"+
+    "\1\20\1\0\1\20\u012b\0\2\3\326\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1024];
@@ -100,12 +100,13 @@ class LexerColor {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\2\2\1\3\2\1\2\4\7\1\1\3"+
-    "\1\0\1\5\2\0\1\6\4\0\1\7\4\0\2\5"+
-    "\1\4\1\0\1\10\1\7\3\0\1\5\1\0";
+    "\1\0\1\1\2\2\1\3\2\1\1\4\1\1\2\5"+
+    "\1\4\10\1\1\3\1\0\1\6\2\0\1\7\2\0"+
+    "\1\10\5\0\1\11\5\0\2\7\1\5\1\12\1\0"+
+    "\1\11\1\13\3\0\1\7\1\0";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[42];
+    int [] result = new int[52];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -130,15 +131,16 @@ class LexerColor {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\35\0\35\0\72\0\127\0\164\0\221\0\256"+
-    "\0\313\0\127\0\350\0\u0105\0\u0122\0\u013f\0\u015c\0\u0179"+
-    "\0\35\0\u0196\0\u01b3\0\u01d0\0\256\0\u01ed\0\u020a\0\u0227"+
-    "\0\u0244\0\u0261\0\u027e\0\u029b\0\u02b8\0\u02d5\0\u02f2\0\35"+
-    "\0\u030f\0\u01d0\0\u032c\0\35\0\35\0\u0349\0\u0366\0\u0383"+
-    "\0\u02d5\0\u03a0";
+    "\0\0\0\41\0\41\0\102\0\143\0\204\0\245\0\41"+
+    "\0\306\0\347\0\u0108\0\143\0\u0129\0\u014a\0\u016b\0\u018c"+
+    "\0\u01ad\0\u01ce\0\u01ef\0\u0210\0\41\0\245\0\245\0\u0231"+
+    "\0\u0252\0\u0273\0\u0294\0\347\0\u02b5\0\u02d6\0\u02f7\0\u0318"+
+    "\0\u0339\0\u035a\0\u037b\0\u039c\0\u03bd\0\u03de\0\u03ff\0\u0420"+
+    "\0\41\0\u0441\0\u0294\0\41\0\u0462\0\41\0\41\0\u0483"+
+    "\0\u04a4\0\u04c5\0\u03ff\0\u04e6";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[42];
+    int [] result = new int[52];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -161,23 +163,26 @@ class LexerColor {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\2\3\1\0\1\4\1\5\1\6\2\2\1\7"+
-    "\1\10\1\11\1\12\1\13\2\2\1\14\1\15\1\2"+
-    "\1\16\1\2\1\17\5\2\1\20\1\21\37\0\1\3"+
-    "\46\0\1\21\26\0\1\21\35\0\1\22\1\0\1\23"+
-    "\33\0\1\24\1\0\2\25\31\0\1\24\1\0\2\11"+
-    "\37\0\16\26\25\0\1\27\1\0\1\30\32\0\1\31"+
-    "\2\0\1\32\26\0\1\33\33\0\1\34\36\0\1\35"+
-    "\12\0\7\36\1\37\25\36\2\23\1\40\1\23\1\41"+
-    "\30\23\12\0\2\42\33\0\2\26\2\0\16\26\32\0"+
-    "\1\43\35\0\1\44\31\0\1\30\35\0\1\45\32\0"+
-    "\1\46\25\0\1\44\40\0\1\47\11\0\7\36\1\50"+
-    "\34\36\1\50\1\36\1\51\23\36\2\0\1\40\52\0"+
-    "\1\45\43\0\1\52\31\0\1\43\10\0\7\36\1\50"+
-    "\1\36\1\40\23\36\32\0\1\45\2\0";
+    "\1\2\2\3\1\0\1\4\1\5\1\6\1\7\2\10"+
+    "\1\2\1\11\1\12\1\13\1\14\1\15\2\2\1\16"+
+    "\1\17\1\20\1\2\1\21\1\2\1\22\3\2\1\23"+
+    "\2\2\1\24\1\25\43\0\1\3\54\0\1\25\30\0"+
+    "\1\25\32\0\7\26\1\27\1\30\30\26\10\0\1\31"+
+    "\2\0\1\32\37\0\1\33\1\0\2\34\35\0\1\33"+
+    "\1\0\2\13\43\0\20\35\24\0\1\36\44\0\1\37"+
+    "\1\0\1\40\41\0\1\41\3\0\1\42\26\0\1\43"+
+    "\37\0\1\44\52\0\1\45\30\0\1\46\13\0\10\26"+
+    "\1\30\2\26\1\0\25\26\10\47\1\50\30\47\2\32"+
+    "\1\51\1\32\1\52\34\32\14\0\2\53\37\0\2\35"+
+    "\2\0\20\35\22\0\1\54\53\0\1\55\41\0\1\54"+
+    "\36\0\1\56\36\0\1\57\40\0\1\60\31\0\1\54"+
+    "\51\0\1\54\33\0\1\61\12\0\10\47\1\62\40\47"+
+    "\1\62\2\47\1\63\25\47\2\0\1\51\61\0\1\56"+
+    "\47\0\1\64\35\0\1\55\11\0\10\47\1\62\2\47"+
+    "\1\51\25\47\35\0\1\56\3\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[957];
+    int [] result = new int[1287];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -220,12 +225,12 @@ class LexerColor {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\15\1\1\11\1\0\1\1\2\0\1\1"+
-    "\4\0\1\1\4\0\1\11\2\1\1\0\2\11\3\0"+
-    "\1\1\1\0";
+    "\1\0\2\11\4\1\1\11\14\1\1\11\1\0\1\1"+
+    "\2\0\1\1\2\0\1\1\5\0\1\1\5\0\1\11"+
+    "\2\1\1\11\1\0\2\11\3\0\1\1\1\0";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[42];
+    int [] result = new int[52];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -650,42 +655,57 @@ class LexerColor {
             { /*ignorar*/
             }
             // fall through
-          case 9: break;
+          case 12: break;
           case 2:
             { /*Ignorar*/
             }
             // fall through
-          case 10: break;
+          case 13: break;
           case 3:
             { return textColor(yychar, yylength(), new Color(238, 212, 159));
             }
             // fall through
-          case 11: break;
-          case 4:
-            { return textColor(yychar, yylength(), new Color(245, 169, 127));
-            }
-            // fall through
-          case 12: break;
-          case 5:
-            { return textColor(yychar, yylength(), new Color(146, 146, 146));
-            }
-            // fall through
-          case 13: break;
-          case 6:
-            { return textColor(yychar, yylength(), new Color(237, 135, 150));
-            }
-            // fall through
           case 14: break;
-          case 7:
-            { return textColor(yychar, yylength(), new Color(166, 218, 149));
+          case 4:
+            { return textColor(yychar, yylength(), new Color(245, 194, 231));
             }
             // fall through
           case 15: break;
-          case 8:
-            { return textColor(yychar, yylength(), new Color(138, 173, 244));
+          case 5:
+            { return textColor(yychar, yylength(), new Color(245, 169, 127));
             }
             // fall through
           case 16: break;
+          case 6:
+            { return textColor(yychar, yylength(), new Color(137, 220, 235));
+            }
+            // fall through
+          case 17: break;
+          case 7:
+            { return textColor(yychar, yylength(), new Color(146, 146, 146));
+            }
+            // fall through
+          case 18: break;
+          case 8:
+            { return textColor(yychar, yylength(), new Color(237, 135, 150));
+            }
+            // fall through
+          case 19: break;
+          case 9:
+            { return textColor(yychar, yylength(), new Color(166, 218, 149));
+            }
+            // fall through
+          case 20: break;
+          case 10:
+            { return textColor(yychar, yylength(), new Color(138, 173, 244));
+            }
+            // fall through
+          case 21: break;
+          case 11:
+            { return textColor(yychar, yylength(), new Color(203, 166, 247));
+            }
+            // fall through
+          case 22: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

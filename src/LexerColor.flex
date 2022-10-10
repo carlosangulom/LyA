@@ -28,6 +28,7 @@ Asignacion = [=]
 Delimitador = [;]
 Plus = [+]
 Minus = [-]
+Times = ["*"]
 DosPuntos = [:]
 
 /* Comentario */
@@ -41,6 +42,10 @@ Identificador = {Letra}({Letra}|{Digito})*
 /* Número */
 Entero = 0 | [1-9][0-9]*
 Decimal = {Digito}({Digito})*{Punto}{Digito}({Digito})* 
+
+/* Cadena */
+ContenidoCadena = ( [^*] | \*+ [^/*] )*
+
 %%
 
 /* Comentarios o espacios en blanco */
@@ -51,16 +56,24 @@ Decimal = {Digito}({Digito})*{Punto}{Digito}({Digito})*
 \?{Identificador} { return textColor(yychar, yylength(), new Color(237, 135, 150)); }
 
 //Tipos de datos
-ent | flot | med { return textColor(yychar, yylength(), new Color(138, 173, 244)); }
+ent | dec | med | str { return textColor(yychar, yylength(), new Color(138, 173, 244)); }
 
 // Números
 {Entero} | {Decimal} { return textColor(yychar, yylength(), new Color(245, 169, 127)); }
 
-
 // Control
 while | for | if | else | ifnot { return textColor(yychar, yylength(), new Color(166, 218, 149)); }
 
+// Función
+fun { return textColor(yychar, yylength(), new Color(203, 166, 247)); }
+
 // Operadores lógicos
 "&&" | "|" | "!" | "!=" | "==" { return textColor(yychar, yylength(), new Color(238, 212, 159)); }
+
+// Operadores aritméticos
+{Plus} | {Minus} | {Times} | {Asignacion} { return textColor(yychar, yylength(), new Color(245, 194, 231)); }
+
+//Cadena
+{Comilla}{ContenidoCadena}{Comilla} { return textColor(yychar, yylength(), new Color(137, 220, 235)); }
 
 . { /*ignorar*/ }
