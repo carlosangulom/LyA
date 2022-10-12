@@ -11,6 +11,7 @@ import compilerTools.Production;
 import compilerTools.TextColor;
 import compilerTools.Token;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -66,6 +67,8 @@ public class Compilador extends javax.swing.JFrame {
                 System.exit(0);
             }
         });
+        labelTextSize.setText("Tamaño: " + jtpCode.getFont().getSize());
+        labelTextSizeConsole.setText("Tamaño: " + jtpCode.getFont().getSize());
         //Functions.setLineNumberOnJTextComponent(jtpCode);
         Functions.setLineNumberOnJTextComponent(jtpCode, WIDTH, new Color(243, 139, 168));
         timerKeyReleased = new Timer((int) (1000 * 0.3), (ActionEvent e) -> {
@@ -112,6 +115,14 @@ public class Compilador extends javax.swing.JFrame {
         jtaOutputConsole = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTokens = new javax.swing.JTable();
+        panelButtonTextSize = new javax.swing.JPanel();
+        btnTextEditorMinus = new javax.swing.JButton();
+        btnTextEditorPlus = new javax.swing.JButton();
+        labelTextSize = new java.awt.Label();
+        panelButtonTextSize1 = new javax.swing.JPanel();
+        btnConsoleMinus = new javax.swing.JButton();
+        btnConsolePlus = new javax.swing.JButton();
+        labelTextSizeConsole = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -220,8 +231,8 @@ public class Compilador extends javax.swing.JFrame {
         panelButtonCompilerExecuteLayout.setHorizontalGroup(
             panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelButtonCompilerExecuteLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCompilar)
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(btnCompilar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEjecutar)
                 .addContainerGap())
@@ -233,7 +244,7 @@ public class Compilador extends javax.swing.JFrame {
                 .addGroup(panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCompilar)
                     .addComponent(btnEjecutar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jtaOutputConsole.setEditable(false);
@@ -268,6 +279,102 @@ public class Compilador extends javax.swing.JFrame {
         tblTokens.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tblTokens);
 
+        panelButtonTextSize.setBackground(new java.awt.Color(24, 25, 38));
+
+        btnTextEditorMinus.setBackground(new java.awt.Color(49, 50, 68));
+        btnTextEditorMinus.setForeground(new java.awt.Color(186, 194, 222));
+        btnTextEditorMinus.setText("-");
+        btnTextEditorMinus.setToolTipText("Texto mas chico");
+        btnTextEditorMinus.setFocusPainted(false);
+        btnTextEditorMinus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTextEditorMinusActionPerformed(evt);
+            }
+        });
+
+        btnTextEditorPlus.setBackground(new java.awt.Color(49, 50, 68));
+        btnTextEditorPlus.setForeground(new java.awt.Color(186, 194, 222));
+        btnTextEditorPlus.setText("+");
+        btnTextEditorPlus.setToolTipText("Texto mas grande");
+        btnTextEditorPlus.setFocusPainted(false);
+        btnTextEditorPlus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTextEditorPlusActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelButtonTextSizeLayout = new javax.swing.GroupLayout(panelButtonTextSize);
+        panelButtonTextSize.setLayout(panelButtonTextSizeLayout);
+        panelButtonTextSizeLayout.setHorizontalGroup(
+            panelButtonTextSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelButtonTextSizeLayout.createSequentialGroup()
+                .addComponent(btnTextEditorMinus, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTextEditorPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelButtonTextSizeLayout.setVerticalGroup(
+            panelButtonTextSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonTextSizeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelButtonTextSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnTextEditorPlus, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(btnTextEditorMinus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        labelTextSize.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        labelTextSize.setForeground(new java.awt.Color(186, 194, 222));
+        labelTextSize.setText("Tamaño: ");
+
+        panelButtonTextSize1.setBackground(new java.awt.Color(24, 25, 38));
+
+        btnConsoleMinus.setBackground(new java.awt.Color(49, 50, 68));
+        btnConsoleMinus.setForeground(new java.awt.Color(186, 194, 222));
+        btnConsoleMinus.setText("-");
+        btnConsoleMinus.setToolTipText("Texto mas chico");
+        btnConsoleMinus.setFocusPainted(false);
+        btnConsoleMinus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsoleMinusActionPerformed(evt);
+            }
+        });
+
+        btnConsolePlus.setBackground(new java.awt.Color(49, 50, 68));
+        btnConsolePlus.setForeground(new java.awt.Color(186, 194, 222));
+        btnConsolePlus.setText("+");
+        btnConsolePlus.setToolTipText("Texto mas grande");
+        btnConsolePlus.setFocusPainted(false);
+        btnConsolePlus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsolePlusActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelButtonTextSize1Layout = new javax.swing.GroupLayout(panelButtonTextSize1);
+        panelButtonTextSize1.setLayout(panelButtonTextSize1Layout);
+        panelButtonTextSize1Layout.setHorizontalGroup(
+            panelButtonTextSize1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelButtonTextSize1Layout.createSequentialGroup()
+                .addComponent(btnConsoleMinus, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsolePlus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        panelButtonTextSize1Layout.setVerticalGroup(
+            panelButtonTextSize1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonTextSize1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelButtonTextSize1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnConsolePlus, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(btnConsoleMinus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        labelTextSizeConsole.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        labelTextSizeConsole.setForeground(new java.awt.Color(186, 194, 222));
+        labelTextSizeConsole.setText("Tamaño: ");
+
         javax.swing.GroupLayout rootPanelLayout = new javax.swing.GroupLayout(rootPanel);
         rootPanel.setLayout(rootPanelLayout);
         rootPanelLayout.setHorizontalGroup(
@@ -278,20 +385,36 @@ public class Compilador extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, rootPanelLayout.createSequentialGroup()
                         .addComponent(buttonsFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelTextSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelButtonTextSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelButtonCompilerExecute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelTextSizeConsole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelButtonTextSize1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(513, 513, 513))
         );
         rootPanelLayout.setVerticalGroup(
             rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rootPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonsFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelButtonCompilerExecute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rootPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buttonsFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelButtonCompilerExecute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelButtonTextSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(rootPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(labelTextSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(rootPanelLayout.createSequentialGroup()
@@ -299,7 +422,13 @@ public class Compilador extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelButtonTextSize1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
+                        .addComponent(labelTextSizeConsole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addContainerGap())
         );
 
         getContentPane().add(rootPanel);
@@ -357,6 +486,50 @@ public class Compilador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
+    private void btnTextEditorMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTextEditorMinusActionPerformed
+        String fontName = jtpCode.getFont().getFontName();
+        int fontSize = jtpCode.getFont().getSize() - 2;
+        
+        Font font = new Font(fontName, 0, fontSize);
+        
+        jtpCode.setFont(font);
+        
+        labelTextSize.setText("Tamaño: " + jtpCode.getFont().getSize());
+    }//GEN-LAST:event_btnTextEditorMinusActionPerformed
+
+    private void btnTextEditorPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTextEditorPlusActionPerformed
+        String fontName = jtpCode.getFont().getFontName();
+        int fontSize = jtpCode.getFont().getSize() + 2;
+        
+        Font font = new Font(fontName, 0, fontSize);
+        
+        jtpCode.setFont(font);
+        
+        labelTextSize.setText("Tamaño: " + jtpCode.getFont().getSize());
+    }//GEN-LAST:event_btnTextEditorPlusActionPerformed
+
+    private void btnConsoleMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsoleMinusActionPerformed
+        String fontName = jtaOutputConsole.getFont().getFontName();
+        int fontSize = jtaOutputConsole.getFont().getSize() - 2;
+        
+        Font font = new Font(fontName, 0, fontSize);
+        
+        jtaOutputConsole.setFont(font);
+        
+        labelTextSizeConsole.setText("Tamaño: " + jtaOutputConsole.getFont().getSize());
+    }//GEN-LAST:event_btnConsoleMinusActionPerformed
+
+    private void btnConsolePlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsolePlusActionPerformed
+        String fontName = jtaOutputConsole.getFont().getFontName();
+        int fontSize = jtaOutputConsole.getFont().getSize() + 2;
+        
+        Font font = new Font(fontName, 0, fontSize);
+        
+        jtaOutputConsole.setFont(font);
+        
+        labelTextSizeConsole.setText("Tamaño: " + jtaOutputConsole.getFont().getSize());
+    }//GEN-LAST:event_btnConsolePlusActionPerformed
+
     private void compile() {
         clearFields();
         lexicalAnalysis();
@@ -398,47 +571,290 @@ public class Compilador extends javax.swing.JFrame {
         gramatica.delete(new String[]{"ERROR_0", "ERROR_1"}, 1, " x Error sintáctico {}: No se esperaba el token '[]' [#, %]");
 
         // Asignación de valores
-        //gramatica.group("VALOR", "(NUMERO_ENTERO | NUMERO_DECIMAL)");
         gramatica.group("VALOR_ENTERO", "NUMERO_ENTERO", true);
         gramatica.group("VALOR_DECIMAL", "NUMERO_DECIMAL", true);
+        gramatica.group("VALOR_BOOL", "BOOL", true);
         gramatica.group("VALOR_CADENA", "CADENA", true);
+        gramatica.group("VALOR_HORA", "HORA", true);
+        gramatica.group("VALOR_DIAS", "MENOR_QUE DIAS MAYOR_QUE", true);
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true);
+        gramatica.group("VALOR_RUTINA", "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true);
+        
+        String valores = "(VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORA | VALOR_DIAS | VALOR_MEDICAMENTO | VALOR_RUTINA)";
+        String tipos = "(TIPO_ENTERO | TIPO_DECIMAL | TIPO_CADENA | TIPO_HORA | TIPO_DIAS | TIPO_MEDICAMENTO | TIPO_RUTINA)";
 
+        //Errores de agrupación
+        gramatica.group("VALOR_AGRUPADO", "MENOR_QUE MAYOR_QUE", true, 92, 
+                " x Error sintáctico {}: Debe haber un valor entre <> [#, %]");
+
+        //Errores días
+        gramatica.group("VALOR_DIAS", "DIAS MAYOR_QUE", true, 92, 
+                " x Error sintáctico {}: El formato de los días debe ser <L,M,W,J,V,S,D> [#, %]");
+        gramatica.group("VALOR_DIAS", "MENOR_QUE DIAS", true, 92, 
+                " x Error sintáctico {}: El formato de los días debe ser <L,M,W,J,V,S,D> [#, %]");
+        
+        //Errores medicamento
+        //Parentesis faltantes
+        gramatica.group("VALOR_MEDICAMENTO", "(IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "(MENOR_QUE IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO)", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "( IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO)", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        
+        //Formato incorrecto
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");        
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) (IDENTIFICADOR | VALOR_ENTERO) COMA MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) (IDENTIFICADOR | VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA  MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA)  MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA MAYOR_QUE", true, 122, 
+                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
+        
+        //Errores Rutina
+        //Parentesis faltantes
+        gramatica.group("VALOR_RUTINA", 
+                "(IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL)", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "(IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL)", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        
+        //Formato incorrecto
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");      
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA  PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA COMA PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA COMA COMA PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A COMA COMA COMA PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+        gramatica.group("VALOR_RUTINA", 
+                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS)  (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) PARENTESIS_C", true, 102,
+                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
+               
+           
         // Declaración de variables
         //Errores de declaración de variables 20+
-        gramatica.group("VARIABLE_ERROR", "(TIPO_ENTERO | TIPO_DECIMAL | TIPO_CADENA) ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA)", true, 20,
-                " x Error sintáctico {}: Se debe asignar un identificador [#, %]");//Identificador no asignado
-        gramatica.group("VARIABLE_ERROR", "(TIPO_ENTERO | TIPO_DECIMAL | TIPO_CADENA) IDENTIFICADOR (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA)", true, 21,
+        gramatica.group("VARIABLE_ERROR", tipos + " ASIGNACION " + valores, true, 20,
+                " x Error sintáctico {}: Falta el identificador en la declaración [#, %]");//Identificador no asignado
+        gramatica.group("VARIABLE_ERROR", tipos + " IDENTIFICADOR " + valores, true, 21,
                 " x Error sintáctico {}: Se debe utilizar el símbolo de asignación [#, %]");//Sin símbolo de asignación 
         
         //Tipo Entero
         //Errores tipo entero 50+
         gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION VALOR_ENTERO", true);
-        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true, 50,
-                " x Error sintáctico {}: No se puede asignar un valor decimal a un tipo de dato ent [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION (VALOR_DECIMAL | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 50,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo entero [#, %]");//Tipos incorrectos
         gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION", true, 51,
                 " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
         
         //Tipo Decimal
         //Errores tipo decimal 60+
         gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true);
-        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION VALOR_ENTERO", true, 60,
-                " x Error sintáctico {}: No se puede asignar un valor entero a un tipo de dato dec [#, %]");//TIpos incorrectos
+        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 60,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo decimal [#, %]");//Tipos incorrectos
         gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION", true, 61,
                 " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
         
         //Tipo Cadena
         //Errores tipo cadena 70+
         gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_CADENA", true);
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_ENTERO", true, 70,
-                " x Error sintáctico {}: No se puede asignar un valor entero a un tipo de dato str [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true, 71,
-                " x Error sintáctico {}: No se puede asignar un valor decimal a un tipo de dato str [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_HORA | VALOR_DIAS)", true, 70,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo cadena [#, %]");//Tipos incorrectos
         gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION", true, 71,
                 " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo Hora
+        //Errores Hora 80+
+        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION VALOR_HORA", true);
+        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_DIAS)", true, 80,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo hora [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION", true, 81,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo días
+        //Errores Días 90+
+        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION VALOR_DIAS", true);
+        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS)", true, 90,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo día [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION", true, 91,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+                
+        //Tipo Rutina
+        //Error Rutina 100+
+        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION VALOR_RUTINA", true);
+        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_MEDICAMENTO)", true, 100,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
+        
+        //Tipo Medicamento
+        //Error medicamento 120+
+        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION VALOR_MEDICAMENTO", true);
+        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_RUTINA)", true, 120,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION", true, 121,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
         
         // Declarar tipos de datos
         gramatica.group("VARIABLE_ERROR", "IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL)", true, 22,
                 " x Error sintáctico {}: Se debe especificar el tipo de dato [#, %]");
+        
+        //Eliminar tipos de datos y operadores de asignación
+        gramatica.delete("TIPO_ENTERO", 23, 
+                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
+        gramatica.delete("TIPO_DECIMAL", 23, 
+                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
+        gramatica.delete("TIPO_CADENA", 23, 
+                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
+        gramatica.delete("TIPO_HORA", 23, 
+                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
+        gramatica.delete("TIPO_MEDICAMENTO", 23, 
+                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
+        gramatica.delete("ASIGNACION", 23, 
+                " x Error sintáctico {}: El operador de asignación no está en una declaración [#, %]");
+        
+        //Eliminar valores
+        gramatica.delete("VALOR_ENTERO", 24, 
+                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
+        gramatica.delete("VALOR_DECIMAL", 24, 
+                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
+        gramatica.delete("VALOR_CADENA", 24, 
+                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
+        gramatica.delete("VALOR_HORA", 24, 
+                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
+        gramatica.delete("VALOR_DIAS", 24, 
+                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
+        gramatica.delete("VALOR_MEDICAMENTO", 24, 
+                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
+        gramatica.delete("VALOR_RUTINA", 24, 
+                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
+        
+        //Agrupación de identificadores y parámetros
+        //gramatica.group("VALOR", valores, true);
+        //gramatica.group("VALOR", "IDENTIFICADOR", true);
+        //gramatica.group("PARAMETROS", "VALOR (COMA VALOR)+", true);
+        
+        //Agrupación de funciones
+        //gramatica.group("DEC_FUNCION", "FUNCION ");
 
         /* Mostrar gramáticas */
         gramatica.show();
@@ -557,17 +973,25 @@ public class Compilador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrir;
     private javax.swing.JButton btnCompilar;
+    private javax.swing.JButton btnConsoleMinus;
+    private javax.swing.JButton btnConsolePlus;
     private javax.swing.JButton btnEjecutar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardarC;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnTextEditorMinus;
+    private javax.swing.JButton btnTextEditorPlus;
     private javax.swing.JPanel buttonsFilePanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jtaOutputConsole;
     private javax.swing.JTextPane jtpCode;
+    private java.awt.Label labelTextSize;
+    private java.awt.Label labelTextSizeConsole;
     private javax.swing.JPanel panelButtonCompilerExecute;
+    private javax.swing.JPanel panelButtonTextSize;
+    private javax.swing.JPanel panelButtonTextSize1;
     private javax.swing.JPanel rootPanel;
     private javax.swing.JTable tblTokens;
     // End of variables declaration//GEN-END:variables

@@ -1,3 +1,13 @@
-ent ?is = 4
-dec ?id = 5.1
-str ?f = 'test'
+//Por identificador
+/*
+med ?p = <'paracetamol', 300, 3>
+hora ?h = 13:30
+dias ?d = <L,M,J,V>
+
+rutina ?r = (?p, ?d, ?h, true)
+
+*/
+
+//Directo
+rutina ?r2 = (<'paracetamol', 300, 3>, <L,W,S,D>,[13:30], false)
+d

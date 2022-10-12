@@ -46,6 +46,12 @@ Decimal = {Digito}({Digito})*{Punto}{Digito}({Digito})*
 /* Cadena */
 ContenidoCadena = ( [^*] | \*+ [^/*] )*
 
+//Horas
+Hora = ([0-1]?[0-9]|2[0-3]):[0-5][0-9]
+
+//Días
+Dias = (L|M|W|J|V|S|D)(\s*,\s*(L|M|W|J|V|S|D))*
+
 %%
 
 /* Comentarios o espacios en blanco */
@@ -56,10 +62,10 @@ ContenidoCadena = ( [^*] | \*+ [^/*] )*
 \?{Identificador} { return textColor(yychar, yylength(), new Color(237, 135, 150)); }
 
 //Tipos de datos
-ent | dec | med | str { return textColor(yychar, yylength(), new Color(138, 173, 244)); }
+ent | dec | med | str | hora | dias | rutina | bool { return textColor(yychar, yylength(), new Color(138, 173, 244)); }
 
-// Números
-{Entero} | {Decimal} { return textColor(yychar, yylength(), new Color(245, 169, 127)); }
+// Valores
+{Entero} | {Decimal} | {Hora} | {Dias} | true | false { return textColor(yychar, yylength(), new Color(245, 169, 127)); }
 
 // Control
 while | for | if | else | ifnot { return textColor(yychar, yylength(), new Color(166, 218, 149)); }

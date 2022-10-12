@@ -46,6 +46,11 @@ Decimal = {Digito}({Digito})*{Punto}{Digito}({Digito})*
 /* Cadena */
 ContenidoCadena = ( [^*] | \*+ [^/*] )*
 
+// Horas
+Hora = ([0-1]?[0-9]|2[0-3]):[0-5][0-9]
+
+//Días
+Dias = (L|M|W|J|V|S|D)(\s*,\s*(L|M|W|J|V|S|D))*
 %%
 
 /* Comentarios o espacios en blanco */
@@ -59,6 +64,10 @@ ent {return token(yytext(), "TIPO_ENTERO", yyline, yycolumn);}
 dec {return token(yytext(), "TIPO_DECIMAL", yyline, yycolumn);}
 med {return token(yytext(), "TIPO_MEDICAMENTO", yyline, yycolumn);}
 str {return token(yytext(), "TIPO_CADENA", yyline, yycolumn);}
+bool {return token(yytext(), "TIPO_BOOL", yyline, yycolumn);}
+hora {return token(yytext(), "TIPO_HORA", yyline, yycolumn);}
+dias {return token(yytext(), "TIPO_DIAS", yyline, yycolumn);}
+rutina {return token(yytext(), "TIPO_RUTINA", yyline, yycolumn);}
 
 // Números
 {Entero} {return token(yytext(), "NUMERO_ENTERO", yyline, yycolumn);}
@@ -100,6 +109,16 @@ if | else | ifnot {return token(yytext(), "CONDICIONAL", yyline, yycolumn);}
 
 // Funciones
 fun {return token(yytext(), "FUNCION", yyline, yycolumn);}
+
+//Horas
+{Hora} {return token(yytext(), "HORA", yyline, yycolumn);}
+
+//Días
+{Dias} {return token(yytext(), "DIAS", yyline, yycolumn);}
+
+
+//Bool
+true | false {return token(yytext(), "BOOL", yyline, yycolumn);}
 
 // errores
 {Identificador} {return token(yytext(), "ERROR_1", yyline, yycolumn);} //Identificador erróneo
