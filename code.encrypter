@@ -1,13 +1,5 @@
-//Por identificador
-/*
-med ?p = <'paracetamol', 300, 3>
-hora ?h = 13:30
-dias ?d = <L,M,J,V>
-
-rutina ?r = (?p, ?d, ?h, true)
-
-*/
-
-//Directo
-rutina ?r2 = (<'paracetamol', 300, 3>, <L,W,S,D>,[13:30], false)
-d
+ent val = 20
+dec vla = 20.40
+str vla = 'hola'
+bool v = true
+23:

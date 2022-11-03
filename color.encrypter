@@ -1,1 +1,5 @@
-egdfdfggdfdfg
+ent val = 20
+dec vla = 20.40
+str vla = 'hola'
+bool v = true
+23:

@@ -40,7 +40,10 @@ public class Compilador extends javax.swing.JFrame {
     private String title;
     private Directory directorio;
     private ArrayList<Token> tokens;
-    private ArrayList<ErrorLSSL> errors;
+    private HashMap<String,String> linea;
+    private HashMap<String,String> columna;
+    private HashMap<String,String> ubicacion;
+    private ArrayList<String> errors;
     private ArrayList<TextColor> textsColor;
     private Timer timerKeyReleased;
     private ArrayList<Production> identProd;
@@ -53,6 +56,9 @@ public class Compilador extends javax.swing.JFrame {
     public Compilador() {
         initComponents();
         init();
+        linea = new HashMap<>();
+        columna = new HashMap<>();
+        ubicacion = new HashMap<>();
     }
 
     private void init() {
@@ -123,6 +129,36 @@ public class Compilador extends javax.swing.JFrame {
         btnConsoleMinus = new javax.swing.JButton();
         btnConsolePlus = new javax.swing.JButton();
         labelTextSizeConsole = new java.awt.Label();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -244,7 +280,7 @@ public class Compilador extends javax.swing.JFrame {
                 .addGroup(panelButtonCompilerExecuteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCompilar)
                     .addComponent(btnEjecutar))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtaOutputConsole.setEditable(false);
@@ -422,7 +458,7 @@ public class Compilador extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelButtonTextSize1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
@@ -432,6 +468,149 @@ public class Compilador extends javax.swing.JFrame {
         );
 
         getContentPane().add(rootPanel);
+
+        jMenuBar1.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jMenu1.setForeground(new java.awt.Color(255, 204, 204));
+        jMenu1.setText("Archivo");
+
+        jMenuItem1.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nuevo.png"))); // NOI18N
+        jMenuItem1.setText("Nuevo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/abrir.png"))); // NOI18N
+        jMenuItem2.setText("Abrir");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar.png"))); // NOI18N
+        jMenuItem3.setText("Guardar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/guardar_como.png"))); // NOI18N
+        jMenuItem4.setText("Guardar Como");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+        jMenu1.add(jSeparator1);
+
+        jMenuItem5.setText("Salir");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Correr");
+
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/compile.png"))); // NOI18N
+        jMenuItem6.setText("Compilar");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ejecutar.png"))); // NOI18N
+        jMenuItem7.setText("Ejecutar");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu5.setText("Tablas");
+
+        jMenuItem23.setText("De simbolos");
+        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem23);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu3.setText("Análisis Léxico ");
+
+        jMenuItem8.setText("Identificador");
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem9.setText("Numero");
+        jMenu3.add(jMenuItem9);
+
+        jMenuItem10.setText("Hora");
+        jMenu3.add(jMenuItem10);
+
+        jMenuItem11.setText("Dia");
+        jMenu3.add(jMenuItem11);
+
+        jMenuItem12.setText("Cadena");
+        jMenu3.add(jMenuItem12);
+
+        jMenuItem13.setText("Tipo de dato");
+        jMenu3.add(jMenuItem13);
+
+        jMenuItem14.setText("Signo de puntuación");
+        jMenu3.add(jMenuItem14);
+
+        jMenuItem15.setText("Agrupación");
+        jMenu3.add(jMenuItem15);
+
+        jMenuItem16.setText("Asignación");
+        jMenu3.add(jMenuItem16);
+
+        jMenuItem17.setText("Ciclo");
+        jMenu3.add(jMenuItem17);
+
+        jMenuItem18.setText("Condicional");
+        jMenu3.add(jMenuItem18);
+
+        jMenuItem19.setText("Operador lógico");
+        jMenu3.add(jMenuItem19);
+
+        jMenuItem20.setText("Operador aritmetico");
+        jMenuItem20.setActionCommand("Operador aritmético");
+        jMenu3.add(jMenuItem20);
+
+        jMenuItem21.setText("Función");
+        jMenu3.add(jMenuItem21);
+
+        jMenuItem22.setText("Bool");
+        jMenu3.add(jMenuItem22);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Análisis Sintáctico");
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -530,6 +709,66 @@ public class Compilador extends javax.swing.JFrame {
         labelTextSizeConsole.setText("Tamaño: " + jtaOutputConsole.getFont().getSize());
     }//GEN-LAST:event_btnConsolePlusActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        directorio.New();
+        clearFields();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if (directorio.Open()) {
+            colorAnalysis();
+            clearFields();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if (directorio.Save()) {
+            clearFields();
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        if (directorio.SaveAs()) {
+            clearFields();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        if (getTitle().contains("*") || getTitle().equals(title)) {
+            if (directorio.Save()) {
+                compile();
+            }
+        } else {
+            compile();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        btnCompilar.doClick();
+        if (codeHasBeenCompiled) {
+            if (!errors.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No se puede ejecutar el código ya que se encontró uno o más errores",
+                        "Error en la compilación", JOptionPane.ERROR_MESSAGE);
+            } else {
+                CodeBlock codeBlock = Functions.splitCodeInCodeBlocks(tokens, "{", "}", ";");
+                System.out.println(codeBlock);
+                ArrayList<String> blocksOfCode = codeBlock.getBlocksOfCodeInOrderOfExec();
+                System.out.println(blocksOfCode);
+
+            }
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        TablaDeSimbolos tds = new TablaDeSimbolos();
+        tds.setVisible(true);
+        tds.setLocationRelativeTo(this);
+    }//GEN-LAST:event_jMenuItem23ActionPerformed
+
     private void compile() {
         clearFields();
         lexicalAnalysis();
@@ -565,11 +804,205 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     private void syntacticAnalysis() {
-        Grammar gramatica = new Grammar(tokens, errors);
-
-        //Eliminar Errores
-        gramatica.delete(new String[]{"ERROR_0", "ERROR_1"}, 1, " x Error sintáctico {}: No se esperaba el token '[]' [#, %]");
-
+        
+        //COMPONENTES LEXICOS (ERRORES)
+        for(int i=0;i<tokens.size();i++){
+            if(tokens.get(i).getLexicalComp().equals("ERROR_X")){
+                errors.add("-----> ERROR LEXICO X:  Error desconocido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR X", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR X", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR X", String.valueOf(i));
+                
+            }
+            if(tokens.get(i).getLexicalComp().equals("ERROR_1")){
+                errors.add("-----> ERROR LEXICO 1:  El identificador tiene caracteres no validos, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR 1", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR 1", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR 1", String.valueOf(i));
+                
+            }
+            if(tokens.get(i).getLexicalComp().equals("ERROR_2")){
+                errors.add("-----> ERROR LEXICO 2:  Este caracter no es valido de esta manera, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR 2", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR 2", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR 2", String.valueOf(i));
+               
+            }
+            if(tokens.get(i).getLexicalComp().equals("ERROR_3")){
+                errors.add("-----> ERROR LEXICO 3:  Falta una comilla en la cadena, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR 3", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR 3", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR 3", String.valueOf(i));
+                
+            }
+            if(tokens.get(i).getLexicalComp().equals("ERROR_4")){
+                errors.add("-----> ERROR LEXICO 4:  Caracter no valido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR 4", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR 4", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR 4", String.valueOf(i));
+                
+            }
+            if(tokens.get(i).getLexicalComp().equals("ERROR_5")){
+                errors.add("-----> ERROR LEXICO 5:  El numero entero no es valido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR 5", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR 5", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR 5", String.valueOf(i));
+                
+            }
+            if(tokens.get(i).getLexicalComp().equals("ERROR_6")){
+                errors.add("-----> ERROR LEXICO 6:  El numero decimal no es valido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR 6", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR 6", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR 6", String.valueOf(i));
+            }
+            if(tokens.get(i).getLexicalComp().equals("ERROR_7")){
+                errors.add("-----> ERROR LEXICO 9:  Falta agregar datos al dia, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
+                linea.put("ERROR 7", String.valueOf(tokens.get(i).getLine()));
+                columna.put("ERROR 7", String.valueOf(tokens.get(i).getColumn()));
+                ubicacion.put("ERROR 7", String.valueOf(i));
+                
+            }
+        }
+        //ESTRUCTURAS DE ASIGNACIÓN CON VALOR
+        for(int i=0;i<tokens.size();i++){
+            if(tokens.get(i).getLexicalComp().equals("TIPO_ENTERO")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("NUMERO_ENTERO")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+            if(tokens.get(i).getLexicalComp().equals("TIPO_DECIMAL")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("NUMERO_DECIMAL")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+            if(tokens.get(i).getLexicalComp().equals("TIPO_CADENA")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("CADENA")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+            if(tokens.get(i).getLexicalComp().equals("TIPO_HORA")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("HORA")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+            if(tokens.get(i).getLexicalComp().equals("TIPO_DIAS")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("DIAS")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+            if(tokens.get(i).getLexicalComp().equals("TIPO_BOOL")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("BOOL")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+            if(tokens.get(i).getLexicalComp().equals("TIPO_MEDICAMENTO")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("VALOR_MEDICAMENTO")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+            if(tokens.get(i).getLexicalComp().equals("TIPO_RUTINA")){
+                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens.get(i+3).getLexicalComp().equals("VALOR_RUTINA")){
+                            System.out.println("Correcto");
+                        }
+                    }
+                }
+            }
+        }
+        //ERRORES SINTACTICOS
+        System.out.println(tokens);
+        
+        /*
+        // Declaración de variables
+        //Errores de declaración de variables 20+
+        gramatica.group("VARIABLE_ERROR", tipos + " ASIGNACION " + valores, true, 20,
+                " x Error sintáctico {}: Falta el identificador en la declaración [#, %]");//Identificador no asignado
+        gramatica.group("VARIABLE_ERROR", tipos + " IDENTIFICADOR " + valores, true, 21,
+                " x Error sintáctico {}: Se debe utilizar el símbolo de asignación [#, %]");//Sin símbolo de asignación 
+        
+        //Tipo Entero
+        //Errores tipo entero 50+
+        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION VALOR_ENTERO", true);
+        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION (VALOR_DECIMAL | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 50,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo entero [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION", true, 51,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo Decimal
+        //Errores tipo decimal 60+
+        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true);
+        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 60,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo decimal [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION", true, 61,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo Cadena
+        //Errores tipo cadena 70+
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_CADENA", true);
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_HORA | VALOR_DIAS)", true, 70,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo cadena [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION", true, 71,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo Hora
+        //Errores Hora 80+
+        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION VALOR_HORA", true);
+        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_DIAS)", true, 80,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo hora [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION", true, 81,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
+        //Tipo días
+        //Errores Días 90+
+        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION VALOR_DIAS", true);
+        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS)", true, 90,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo día [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION", true, 91,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+                
+        //Tipo Rutina
+        //Error Rutina 100+
+        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION VALOR_RUTINA", true);
+        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_MEDICAMENTO)", true, 100,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
+        
+        //Tipo Medicamento
+        //Error medicamento 120+
+        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION VALOR_MEDICAMENTO", true);
+        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_RUTINA)", true, 120,
+                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
+        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION", true, 121,
+                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
+        
         // Asignación de valores
         gramatica.group("VALOR_ENTERO", "NUMERO_ENTERO", true);
         gramatica.group("VALOR_DECIMAL", "NUMERO_DECIMAL", true);
@@ -580,8 +1013,7 @@ public class Compilador extends javax.swing.JFrame {
         gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true);
         gramatica.group("VALOR_RUTINA", "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true);
         
-        String valores = "(VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORA | VALOR_DIAS | VALOR_MEDICAMENTO | VALOR_RUTINA)";
-        String tipos = "(TIPO_ENTERO | TIPO_DECIMAL | TIPO_CADENA | TIPO_HORA | TIPO_DIAS | TIPO_MEDICAMENTO | TIPO_RUTINA)";
+        
 
         //Errores de agrupación
         gramatica.group("VALOR_AGRUPADO", "MENOR_QUE MAYOR_QUE", true, 92, 
@@ -752,67 +1184,6 @@ public class Compilador extends javax.swing.JFrame {
                 " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
                
            
-        // Declaración de variables
-        //Errores de declaración de variables 20+
-        gramatica.group("VARIABLE_ERROR", tipos + " ASIGNACION " + valores, true, 20,
-                " x Error sintáctico {}: Falta el identificador en la declaración [#, %]");//Identificador no asignado
-        gramatica.group("VARIABLE_ERROR", tipos + " IDENTIFICADOR " + valores, true, 21,
-                " x Error sintáctico {}: Se debe utilizar el símbolo de asignación [#, %]");//Sin símbolo de asignación 
-        
-        //Tipo Entero
-        //Errores tipo entero 50+
-        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION VALOR_ENTERO", true);
-        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION (VALOR_DECIMAL | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 50,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo entero [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION", true, 51,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo Decimal
-        //Errores tipo decimal 60+
-        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true);
-        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 60,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo decimal [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION", true, 61,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo Cadena
-        //Errores tipo cadena 70+
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_CADENA", true);
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_HORA | VALOR_DIAS)", true, 70,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo cadena [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION", true, 71,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo Hora
-        //Errores Hora 80+
-        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION VALOR_HORA", true);
-        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_DIAS)", true, 80,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo hora [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION", true, 81,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo días
-        //Errores Días 90+
-        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION VALOR_DIAS", true);
-        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS)", true, 90,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo día [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION", true, 91,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-                
-        //Tipo Rutina
-        //Error Rutina 100+
-        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION VALOR_RUTINA", true);
-        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_MEDICAMENTO)", true, 100,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
-        
-        //Tipo Medicamento
-        //Error medicamento 120+
-        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION VALOR_MEDICAMENTO", true);
-        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_RUTINA)", true, 120,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION", true, 121,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
         
         // Declarar tipos de datos
         gramatica.group("VARIABLE_ERROR", "IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL)", true, 22,
@@ -857,7 +1228,7 @@ public class Compilador extends javax.swing.JFrame {
         //gramatica.group("DEC_FUNCION", "FUNCION ");
 
         /* Mostrar gramáticas */
-        gramatica.show();
+        
     }
 
     private void semanticAnalysis() {
@@ -900,9 +1271,8 @@ public class Compilador extends javax.swing.JFrame {
     private void printConsole() {
         int sizeErrors = errors.size();
         if (sizeErrors > 0) {
-            Functions.sortErrorsByLineAndColumn(errors);
             String strErrors = "\n";
-            for (ErrorLSSL error : errors) {
+            for (String error : errors) {
                 String strError = String.valueOf(error);
                 strErrors += strError + "\n";
             }
@@ -982,9 +1352,39 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JButton btnTextEditorMinus;
     private javax.swing.JButton btnTextEditorPlus;
     private javax.swing.JPanel buttonsFilePanel;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextArea jtaOutputConsole;
     private javax.swing.JTextPane jtpCode;
     private java.awt.Label labelTextSize;
