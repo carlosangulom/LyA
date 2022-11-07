@@ -59,7 +59,7 @@ Dias2 = (L|M|W|J|V|S|D)
 Error1 = {Letra}({Gato}|{Ampersand})({Letra}|{Digito}|{Gato}|{Ampersand})*
 Error2 = {Comilla}
 Error3 = {Comilla}{ContenidoCadena}
-Error4 = ({Gato}|{Ampersand}|{Punto})({Gato}|{Ampersand}|{Punto})*
+Error4 = ({Gato}|{Ampersand}|{Punto})({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)*
 Error5 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*
 Error6 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}{Digito}({Digito})*|
          {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}|
@@ -73,6 +73,15 @@ Error7 = {Dias2}{Coma}({Dias2}{Coma})*
 /* Comentarios o espacios en blanco */
 {Comentario} { return textColor(yychar, yylength(), new Color(146, 146, 146)); }
 {EspacioEnBlanco} { /*Ignorar*/ }
+
+//Errores
+Error1 { /*ignorar*/ }
+Error2 { /*ignorar*/ }
+Error3 { /*ignorar*/ }
+Error4 { /*ignorar*/ }
+Error5 { /*ignorar*/ }
+Error6 { /*ignorar*/ }
+Error7 { /*ignorar*/ }
 
 // Valores
 {Entero} | {Decimal} | {Hora} | {Dias} | true | false { return textColor(yychar, yylength(), new Color(245, 169, 127)); }
@@ -94,14 +103,5 @@ while | for | if | else | ifnot { return textColor(yychar, yylength(), new Color
 
 //Cadena
 {Comilla}{ContenidoCadena}{Comilla} { return textColor(yychar, yylength(), new Color(137, 220, 235)); }
-
-//Errores
-Error1 { /*ignorar*/ }
-Error2 { /*ignorar*/ }
-Error3 { /*ignorar*/ }
-Error4 { /*ignorar*/ }
-Error5 { /*ignorar*/ }
-Error6 { /*ignorar*/ }
-Error7 { /*ignorar*/ }
 
 . { /*ignorar*/ }

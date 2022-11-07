@@ -60,7 +60,7 @@ Dias2 = (L|M|W|J|V|S|D)
 Error1 = {Letra}({Gato}|{Ampersand})({Letra}|{Digito}|{Gato}|{Ampersand})*
 Error2 = {Comilla}
 Error3 = {Comilla}{ContenidoCadena}
-Error4 = ({Gato}|{Ampersand}|{Punto})({Gato}|{Ampersand}|{Punto})*
+Error4 = ({Gato}|{Ampersand}|{Punto})({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)*
 Error5 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*
 Error6 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}{Digito}({Digito})*|
          {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}|

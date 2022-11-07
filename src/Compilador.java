@@ -39,26 +39,23 @@ public class Compilador extends javax.swing.JFrame {
 
     private String title;
     private Directory directorio;
-    private ArrayList<Token> tokens;
-    private HashMap<String,String> linea;
-    private HashMap<String,String> columna;
-    private HashMap<String,String> ubicacion;
+    private ArrayList<Token> tokens1;
+    private ArrayList<Token> tokens2;
     private ArrayList<String> errors;
     private ArrayList<TextColor> textsColor;
     private Timer timerKeyReleased;
     private ArrayList<Production> identProd;
     private HashMap<String, String> identificadores;
     private boolean codeHasBeenCompiled = false;
+    private int cont = 0;
 
+    private Automatas a = new Automatas();
     /**
      * Creates new form Compilador
      */
     public Compilador() {
         initComponents();
         init();
-        linea = new HashMap<>();
-        columna = new HashMap<>();
-        ubicacion = new HashMap<>();
     }
 
     private void init() {
@@ -89,7 +86,9 @@ public class Compilador extends javax.swing.JFrame {
         Functions.insertAsteriskInName(this, jtpCode, () -> {
             timerKeyReleased.restart();
         });
-        tokens = new ArrayList<>();
+        a.setLocationRelativeTo(this);
+        tokens1 = new ArrayList<>();
+        tokens2 = new ArrayList<>();
         errors = new ArrayList<>();
         textsColor = new ArrayList<>();
         identProd = new ArrayList<>();
@@ -143,10 +142,10 @@ public class Compilador extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        CL1 = new javax.swing.JMenuItem();
+        CL2 = new javax.swing.JMenuItem();
+        CL3 = new javax.swing.JMenuItem();
+        CL4 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -156,7 +155,6 @@ public class Compilador extends javax.swing.JFrame {
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
@@ -559,50 +557,117 @@ public class Compilador extends javax.swing.JFrame {
 
         jMenu3.setText("Análisis Léxico ");
 
-        jMenuItem8.setText("Identificador");
-        jMenu3.add(jMenuItem8);
+        CL1.setText("Identificador");
+        CL1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CL1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(CL1);
 
-        jMenuItem9.setText("Numero");
-        jMenu3.add(jMenuItem9);
+        CL2.setText("Numero");
+        CL2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CL2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(CL2);
 
-        jMenuItem10.setText("Hora");
-        jMenu3.add(jMenuItem10);
+        CL3.setText("Hora");
+        CL3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CL3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(CL3);
 
-        jMenuItem11.setText("Dia");
-        jMenu3.add(jMenuItem11);
+        CL4.setText("Dia");
+        CL4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CL4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(CL4);
 
         jMenuItem12.setText("Cadena");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem12);
 
         jMenuItem13.setText("Tipo de dato");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem13);
 
         jMenuItem14.setText("Signo de puntuación");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem14);
 
         jMenuItem15.setText("Agrupación");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem15);
 
         jMenuItem16.setText("Asignación");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem16);
 
         jMenuItem17.setText("Ciclo");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem17);
 
         jMenuItem18.setText("Condicional");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem18);
 
         jMenuItem19.setText("Operador lógico");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem19);
 
         jMenuItem20.setText("Operador aritmetico");
         jMenuItem20.setActionCommand("Operador aritmético");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem20);
 
-        jMenuItem21.setText("Función");
-        jMenu3.add(jMenuItem21);
-
         jMenuItem22.setText("Bool");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem22);
 
         jMenuBar1.add(jMenu3);
@@ -656,7 +721,7 @@ public class Compilador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No se puede ejecutar el código ya que se encontró uno o más errores",
                         "Error en la compilación", JOptionPane.ERROR_MESSAGE);
             } else {
-                CodeBlock codeBlock = Functions.splitCodeInCodeBlocks(tokens, "{", "}", ";");
+                CodeBlock codeBlock = Functions.splitCodeInCodeBlocks(tokens2, "{", "}", ";");
                 System.out.println(codeBlock);
                 ArrayList<String> blocksOfCode = codeBlock.getBlocksOfCodeInOrderOfExec();
                 System.out.println(blocksOfCode);
@@ -754,7 +819,7 @@ public class Compilador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No se puede ejecutar el código ya que se encontró uno o más errores",
                         "Error en la compilación", JOptionPane.ERROR_MESSAGE);
             } else {
-                CodeBlock codeBlock = Functions.splitCodeInCodeBlocks(tokens, "{", "}", ";");
+                CodeBlock codeBlock = Functions.splitCodeInCodeBlocks(tokens2, "{", "}", ";");
                 System.out.println(codeBlock);
                 ArrayList<String> blocksOfCode = codeBlock.getBlocksOfCodeInOrderOfExec();
                 System.out.println(blocksOfCode);
@@ -768,6 +833,90 @@ public class Compilador extends javax.swing.JFrame {
         tds.setVisible(true);
         tds.setLocationRelativeTo(this);
     }//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void CL1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CL1ActionPerformed
+        a.Limpiar();
+        identificador();
+        a.setVisible(true);
+    }//GEN-LAST:event_CL1ActionPerformed
+
+    private void CL2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CL2ActionPerformed
+        a.Limpiar();
+        numero();
+        a.setVisible(true);
+    }//GEN-LAST:event_CL2ActionPerformed
+
+    private void CL4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CL4ActionPerformed
+        a.Limpiar();
+        dias();
+        a.setVisible(true);
+    }//GEN-LAST:event_CL4ActionPerformed
+
+    private void CL3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CL3ActionPerformed
+        a.Limpiar();
+        //hora();
+        a.setVisible(true);
+    }//GEN-LAST:event_CL3ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        a.Limpiar();
+        cadena();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        a.Limpiar();
+        tipoDeDato();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        a.Limpiar();
+        signoDePuntuacion();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        a.Limpiar();
+        agrupacion();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        a.Limpiar();
+        asignacion();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        a.Limpiar();
+        ciclo();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        a.Limpiar();
+        condicional();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        a.Limpiar();
+        operadorLogico();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        a.Limpiar();
+        operadorAritmetico();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        a.Limpiar();
+        bool();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     private void compile() {
         clearFields();
@@ -794,7 +943,8 @@ public class Compilador extends javax.swing.JFrame {
                 if (token == null) {
                     break;
                 }
-                tokens.add(token);
+                tokens1.add(token);
+                tokens2.add(token);
             }
         } catch (FileNotFoundException ex) {
             System.out.println("El archivo no pudo ser encontrado... " + ex.getMessage());
@@ -804,66 +954,64 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     private void syntacticAnalysis() {
-        
-        //COMPONENTES LEXICOS (ERRORES)
-        for(int i=0;i<tokens.size();i++){
-            if(tokens.get(i).getLexicalComp().equals("ERROR_X")){
-                errors.add("-----> ERROR LEXICO X:  Error desconocido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR X", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR X", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR X", String.valueOf(i));
-                
+        //COMPONENTES LEXICOS (MENSAJE DE ERRORES)
+        for(int i=0; i < tokens1.size(); i++){
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_X")){
+                errors.add("-----> ERROR LEXICO X:  Error desconocido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
-            if(tokens.get(i).getLexicalComp().equals("ERROR_1")){
-                errors.add("-----> ERROR LEXICO 1:  El identificador tiene caracteres no validos, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR 1", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR 1", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR 1", String.valueOf(i));
-                
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_1")){
+                errors.add("-----> ERROR LEXICO 1:  El identificador tiene caracteres no validos, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
-            if(tokens.get(i).getLexicalComp().equals("ERROR_2")){
-                errors.add("-----> ERROR LEXICO 2:  Este caracter no es valido de esta manera, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR 2", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR 2", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR 2", String.valueOf(i));
-               
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_2")){
+                errors.add("-----> ERROR LEXICO 2:  Este caracter no es valido de esta manera, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
-            if(tokens.get(i).getLexicalComp().equals("ERROR_3")){
-                errors.add("-----> ERROR LEXICO 3:  Falta una comilla en la cadena, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR 3", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR 3", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR 3", String.valueOf(i));
-                
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_3")){
+                errors.add("-----> ERROR LEXICO 3:  Falta una comilla en la cadena, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
-            if(tokens.get(i).getLexicalComp().equals("ERROR_4")){
-                errors.add("-----> ERROR LEXICO 4:  Caracter no valido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR 4", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR 4", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR 4", String.valueOf(i));
-                
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_4")){
+                errors.add("-----> ERROR LEXICO 4:  Caracter no valido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
-            if(tokens.get(i).getLexicalComp().equals("ERROR_5")){
-                errors.add("-----> ERROR LEXICO 5:  El numero entero no es valido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR 5", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR 5", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR 5", String.valueOf(i));
-                
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_5")){
+                errors.add("-----> ERROR LEXICO 5:  El numero entero no es valido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
-            if(tokens.get(i).getLexicalComp().equals("ERROR_6")){
-                errors.add("-----> ERROR LEXICO 6:  El numero decimal no es valido, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR 6", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR 6", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR 6", String.valueOf(i));
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_6")){
+                errors.add("-----> ERROR LEXICO 6:  El numero decimal no es valido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
-            if(tokens.get(i).getLexicalComp().equals("ERROR_7")){
-                errors.add("-----> ERROR LEXICO 9:  Falta agregar datos al dia, Linea["+tokens.get(i).getLine()+"], Columna["+tokens.get(i).getColumn()+"]");
-                linea.put("ERROR 7", String.valueOf(tokens.get(i).getLine()));
-                columna.put("ERROR 7", String.valueOf(tokens.get(i).getColumn()));
-                ubicacion.put("ERROR 7", String.valueOf(i));
-                
+            if(tokens1.get(i).getLexicalComp().equals("ERROR_7")){
+                errors.add("-----> ERROR LEXICO 7:  Falta agregar datos al dia, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
         }
+        //ELIMINACION DE ERRORES LEXICOS
+        for(Token id: tokens1){
+            if(id.getLexicalComp().contains("ERROR_X")){
+                tokens2.remove(id);
+            }
+            if(id.getLexicalComp().contains("ERROR_1")){
+                tokens2.remove(id);
+            }
+            if(id.getLexicalComp().contains("ERROR_2")){
+                tokens2.remove(id);
+            }
+            if(id.getLexicalComp().contains("ERROR_3")){
+                tokens2.remove(id);
+            }
+            if(id.getLexicalComp().contains("ERROR_4")){
+                tokens2.remove(id);
+            }
+            if(id.getLexicalComp().contains("ERROR_5")){
+                tokens2.remove(id);
+            }
+            if(id.getLexicalComp().contains("ERROR_6")){
+                tokens2.remove(id);
+            }
+            if(id.getLexicalComp().contains("ERROR_7")){
+                tokens2.remove(id);
+            }
+        }
+        
+        System.out.println(tokens2);
         //ESTRUCTURAS DE ASIGNACIÓN CON VALOR
+        /*
         for(int i=0;i<tokens.size();i++){
             if(tokens.get(i).getLexicalComp().equals("TIPO_ENTERO")){
                 if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
@@ -938,8 +1086,9 @@ public class Compilador extends javax.swing.JFrame {
                 }
             }
         }
+        
         //ERRORES SINTACTICOS
-        System.out.println(tokens);
+        
         
         /*
         // Declaración de variables
@@ -1232,6 +1381,7 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     private void semanticAnalysis() {
+        
     }
 
     private void colorAnalysis() {
@@ -1262,7 +1412,7 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     private void fillTableTokens() {
-        tokens.forEach(token -> {
+        tokens2.forEach(token -> {
             Object[] data = new Object[]{token.getLexicalComp(), token.getLexeme(), "[" + token.getLine() + ", " + token.getColumn() + "]"};
             Functions.addRowDataInTable(tblTokens, data);
         });
@@ -1286,13 +1436,594 @@ public class Compilador extends javax.swing.JFrame {
     private void clearFields() {
         Functions.clearDataInTable(tblTokens);
         jtaOutputConsole.setText("");
-        tokens.clear();
+        tokens1.clear();
+        tokens2.clear();
         errors.clear();
         identProd.clear();
         identificadores.clear();
         codeHasBeenCompiled = false;
     }
-
+    private void identificador(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("IDENTIFICADOR")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("IDENTIFICADO1");
+                    a.mostrarAutomata("IDENTIFICADOR2","IDENTIFICADOR",id.getLexeme(),"Las transiciones del estado inicial [q0] al estado final\n[q1] se generan sin error, por lo tanto el autómata\nse genera correctamente.");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_1")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("IDENTIFICADO1");
+                    a.mostrarAutomata("IDENTIFICADOR3","IDENTIFICADOR",id.getLexeme(),"Del estado [q0] a [q1] o bien de el lazo de [q1] a [q1]\nhay un simbolo que no pertenece a la transición, por\nlo tanto evita llegar al estado final [q1] y se genera un\nerror en el autómata.");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("IDENTIFICADO1");
+                    a.mostrarAutomata("IDENTIFICADOR4","IDENTIFICADOR",id.getLexeme(),"El token no pertence al autómata, por lo tanto jamas\nentra al estado inicial [q0].");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void numero(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("NUMERO_ENTERO")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("NUMERO1");
+                    a.mostrarAutomata("NUMERO5","NUMERO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("NUMERO_DECIMAL")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("NUMERO1");
+                    a.mostrarAutomata("NUMERO4","NUMERO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("NUMERO1");
+                    a.mostrarAutomata("NUMERO6","NUMERO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_5")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("NUMERO1");
+                    a.mostrarAutomata("NUMERO2","NUMERO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_6")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("NUMERO1");
+                    a.mostrarAutomata("NUMERO3","NUMERO",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    private void dias(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("DIAS")){
+                    if(id.getLexeme().chars().count() == 1){
+                        a.nuevoAutomata(cont,id.getLexeme());
+                        a.mostrarAutomataO("DIAS1");
+                        a.mostrarAutomata("DIAS2","DIAS",id.getLexeme(),"");
+                        cont++;
+                    }else{
+                        a.nuevoAutomata(cont,id.getLexeme());
+                        a.mostrarAutomataO("DIAS1");
+                        a.mostrarAutomata("DIAS3","DIAS",id.getLexeme(),"");
+                        cont++;
+                    }
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("DIAS1");
+                    a.mostrarAutomata("DIAS6","DIAS",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_7")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("DIAS1");
+                    if(id.getLexeme().chars().count() == 2){
+                        a.mostrarAutomata("DIAS4","DIAS",id.getLexeme(),"");
+                    }else{
+                        a.mostrarAutomata("DIAS4","DIAS",id.getLexeme(),"");
+                    }
+                    cont++;
+                }
+            }
+        }
+    }
+    /*
+    private void hora(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("HORA")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("HORA1");
+                    if(id.getLexeme().equals("24:00")){
+                        a.mostrarAutomata("HORA8","HORA",id.getLexeme(),"");
+                        cont++;
+                    }else{
+                        a.mostrarAutomata("HORA6","HORA",id.getLexeme(),"");
+                        cont++;
+                    }
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("HORA1");
+                    a.mostrarAutomata("HORA9","HORA",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("NUMERO_ENTERO")){
+                    for(int i = 0; i < tokens1.size(); i++){
+                        if(tokens1.get(i).getLexeme().equals(id.getLexeme())){
+                            if(Integer.parseInt(id.getLexeme()) < 24){
+                                if(i == tokens1.size()-1){
+                                    a.nuevoAutomata(cont,id.getLexeme());
+                                    a.mostrarAutomataO("HORA1");
+                                    a.mostrarAutomata("HORA3","HORA",id.getLexeme(),"");
+                                    cont++;
+                                    break;
+                                }else{
+                                    if(tokens1.get(i+1).getLexeme().equals(":")){
+                                        if(i == tokens1.size()-2){
+                                            a.nuevoAutomata(cont,id.getLexeme()+tokens1.get(i+1).getLexeme());
+                                            a.mostrarAutomataO("HORA1");
+                                            a.mostrarAutomata("HORA5","HORA",id.getLexeme()+tokens1.get(i+1).getLexeme(),"");
+                                            cont++;
+                                            break;
+                                        }else{
+                                            if(tokens1.get(i+2).getLexicalComp().equals("NUMERO_ENTERO") && Integer.parseInt(tokens1.get(i+2).getLexeme()) > 60){
+                                                a.nuevoAutomata(cont,id.getLexeme()+tokens1.get(i+1).getLexeme()+tokens1.get(i+2).getLexeme());
+                                                a.mostrarAutomataO("HORA1");
+                                                a.mostrarAutomata("HORA5","HORA",id.getLexeme()+tokens1.get(i+1).getLexeme()+tokens1.get(i+2).getLexeme(),"");
+                                                cont++;
+                                                break;
+                                            }
+                                        }
+                                    }else{
+                                        a.nuevoAutomata(cont,id.getLexeme());
+                                        a.mostrarAutomataO("HORA1");
+                                        a.mostrarAutomata("HORA3","HORA",id.getLexeme(),"");
+                                        cont++;
+                                        break;
+                                    }
+                                }
+                            }else if(Integer.parseInt(id.getLexeme()) > 23){
+                                if(i == tokens1.size()-1){
+                                    a.nuevoAutomata(cont,id.getLexeme());
+                                    a.mostrarAutomataO("HORA1");
+                                    a.mostrarAutomata("HORA4","HORA",id.getLexeme(),"");
+                                    cont++;
+                                    break;
+                                }else{
+                                    if(tokens1.get(i+1).getLexeme().equals(":")){
+                                        if(i == tokens1.size()-2){
+                                            a.nuevoAutomata(cont,id.getLexeme()+tokens1.get(i+1).getLexeme());
+                                            a.mostrarAutomataO("HORA1");
+                                            a.mostrarAutomata("HORA7","HORA",id.getLexeme()+tokens1.get(i+1).getLexeme(),"");
+                                            cont++;
+                                            break;
+                                        }else{
+                                            if(tokens1.get(i+2).getLexicalComp().equals("NUMERO_ENTERO") && Integer.parseInt(tokens1.get(i+2).getLexeme()) > 60){
+                                                a.nuevoAutomata(cont,id.getLexeme()+tokens1.get(i+1).getLexeme()+tokens1.get(i+2).getLexeme());
+                                                a.mostrarAutomataO("HORA1");
+                                                a.mostrarAutomata("HORA7","HORA",id.getLexeme()+tokens1.get(i+1).getLexeme()+tokens1.get(i+2).getLexeme(),"");
+                                                cont++;
+                                                break;
+                                            }
+                                        }
+                                    }else{
+                                        a.nuevoAutomata(cont,id.getLexeme());
+                                        a.mostrarAutomataO("HORA1");
+                                        a.mostrarAutomata("HORA4","HORA",id.getLexeme(),"");
+                                        cont++;
+                                        break;
+                                    }
+                                }
+                            }        
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+    */
+    private void cadena(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("CADENA")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CADENA1");
+                    a.mostrarAutomata("CADENA3","CADENA",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_2")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CADENA1");
+                    a.mostrarAutomata("CADENA2","CADENA",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_3")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CADENA1");
+                    a.mostrarAutomata("CADENA2","CADENA",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CADENA1");
+                    a.mostrarAutomata("CADENA4","CADENA",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void tipoDeDato(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("TIPO_ENTERO")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO2","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("TIPO_DECIMAL")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO3","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("TIPO_MEDICAMENTO")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO4","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("TIPO_CADENA")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO5","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("TIPO_BOOL")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO6","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("TIPO_HORA")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO7","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("TIPO_DIAS")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO8","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("TIPO_RUTINA")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO9","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("TIPO DE DATO1");
+                    a.mostrarAutomata("TIPO DE DATO10","TIPO DE DATO",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void signoDePuntuacion(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("COMA")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACION2","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("DELIMITADOR")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACION3","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("DOS_PUNTOS")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACION4","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACION5","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void agrupacion(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("PARENTESIS_A")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN2","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("MENOR_QUE")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN4","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("MAYOR_QUE")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN5","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("LLAVE_A")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN6","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("LLAVE_C")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN7","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("SQUARE_A")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN8","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("SQUARE_C")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN9","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("AGRUPACIÓN1");
+                    a.mostrarAutomata("AGRUPACIÓN10","AGRUPACION",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void asignacion(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("ASIGNACION")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("ASIGNACION1");
+                    a.mostrarAutomata("ASIGNACION2","ASIGNACION",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("ASIGNACION1");
+                    a.mostrarAutomata("ASIGNACION3","ASIGNACION",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void ciclo(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("CICLO_WHILE")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CICLO1");
+                    a.mostrarAutomata("CICLO2","CICLO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("CICLO_FOR")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CICLO1");
+                    a.mostrarAutomata("CICLO3","CICLO",id.getLexeme(),"");
+                    cont++;
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CICLO1");
+                    a.mostrarAutomata("CICLO4","CICLO",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void condicional(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("CONDICIONAL")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CONDICIONAL1");
+                    if(id.getLexeme().equals("if")){
+                        a.mostrarAutomata("CONDICIONAL2","CONDICIONAL",id.getLexeme(),"");
+                        cont++;
+                    }else if(id.getLexeme().equals("else")){
+                        a.mostrarAutomata("CONDICIONAL3","CONDICIONAL",id.getLexeme(),"");
+                        cont++;
+                    }else if(id.getLexeme().equals("ifnot")){
+                        a.mostrarAutomata("CONDICIONAL4","CONDICIONAL",id.getLexeme(),"");
+                        cont++;
+                    }
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("CONDICIONAL1");
+                    a.mostrarAutomata("CONDICIONAL5","CONDICIONAL",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void operadorLogico(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("OP_LOGICO")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("OPERADOR LOGICO1");
+                    if(id.getLexeme().equals("&&")){
+                        a.mostrarAutomata("OPERADOR LOGICO2","OPERADOR LOGICO",id.getLexeme(),"");
+                        cont++;
+                    }else if(id.getLexeme().equals("|")){
+                        a.mostrarAutomata("OPERADOR LOGICO3","OPERADOR LOGICO",id.getLexeme(),"");
+                        cont++;
+                    }else if(id.getLexeme().equals("!")){
+                        a.mostrarAutomata("OPERADOR LOGICO4","OPERADOR LOGICO",id.getLexeme(),"");
+                        cont++;
+                    }else if(id.getLexeme().equals("!=")){
+                        a.mostrarAutomata("OPERADOR LOGICO5","OPERADOR LOGICO",id.getLexeme(),"");
+                        cont++;
+                    }else if(id.getLexeme().equals("==")){
+                        a.mostrarAutomata("OPERADOR LOGICO6","OPERADOR LOGICO",id.getLexeme(),"");
+                        cont++;
+                    }
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("OPERADOR LOGICO1");
+                    a.mostrarAutomata("OPERADOR LOGICO7","OPERADOR LOGICO",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
+    private void operadorAritmetico(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("OP_ARITMETICO")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("OPERADOR ARITMETICO1");
+                    if(id.getLexeme().equals("+")){
+                        a.mostrarAutomata("OPERADOR ARITMETICO2","OPERADOR ARITMETICO",id.getLexeme(),"");
+                        cont++;
+                    }else if(id.getLexeme().equals("-")){
+                        a.mostrarAutomata("OPERADOR ARITMETICO3","OPERADOR ARITMETICO",id.getLexeme(),"");
+                        cont++;
+                    }else{
+                        a.mostrarAutomata("OPERADOR ARITMETICO4","OPERADOR ARITMETICO",id.getLexeme(),"");
+                        cont++;
+                    }
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("OPERADOR ARITMETICO1");
+                    a.mostrarAutomata("OPERADOR ARITMETICO5","OPERADOR ARITMETICO",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    private void bool(){
+        cont = 0;
+        if(tokens1.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
+                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
+        }else{
+            for(Token id: tokens1){
+                if(id.getLexicalComp().equals("BOOL")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("BOOL1");
+                    if(id.getLexeme().equals("true")){
+                        a.mostrarAutomata("BOOL2","BOOL",id.getLexeme(),"");
+                        cont++;
+                    }else{
+                        a.mostrarAutomata("BOOL3","BOOL",id.getLexeme(),"");
+                        cont++;
+                    }
+                }
+                if(id.getLexicalComp().equals("ERROR_4")){
+                    a.nuevoAutomata(cont,id.getLexeme());
+                    a.mostrarAutomataO("BOOL1");
+                    a.mostrarAutomata("BOOL4","BOOL",id.getLexeme(),"");
+                    cont++;
+                }
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1341,6 +2072,10 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CL1;
+    private javax.swing.JMenuItem CL2;
+    private javax.swing.JMenuItem CL3;
+    private javax.swing.JMenuItem CL4;
     private javax.swing.JButton btnAbrir;
     private javax.swing.JButton btnCompilar;
     private javax.swing.JButton btnConsoleMinus;
@@ -1359,8 +2094,6 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
@@ -1371,7 +2104,6 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;
@@ -1379,8 +2111,6 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
