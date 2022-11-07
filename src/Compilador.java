@@ -1008,6 +1008,9 @@ public class Compilador extends javax.swing.JFrame {
                 tokens2.remove(id);
             }
         }
+        ifnot(vla == 5){
+        
+        }
         
         System.out.println(tokens2);
         //ESTRUCTURAS DE ASIGNACIÓN CON VALOR
