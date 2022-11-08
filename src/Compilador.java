@@ -48,8 +48,10 @@ public class Compilador extends javax.swing.JFrame {
     private HashMap<String, String> identificadores;
     private boolean codeHasBeenCompiled = false;
     private int cont = 0;
-
+    private ArrayList<Producciones> PD1;
     private Automatas a = new Automatas();
+    private Producciones PD2;
+    
     /**
      * Creates new form Compilador
      */
@@ -93,6 +95,7 @@ public class Compilador extends javax.swing.JFrame {
         textsColor = new ArrayList<>();
         identProd = new ArrayList<>();
         identificadores = new HashMap<>();
+        PD1 = new ArrayList<>();
         Functions.setAutocompleterJTextComponent(new String[]{}, jtpCode, () -> {
             timerKeyReleased.restart();
         });
@@ -1008,41 +1011,27 @@ public class Compilador extends javax.swing.JFrame {
                 tokens2.remove(id);
             }
         }
-        ifnot(vla == 5){
         
-        }
         
         System.out.println(tokens2);
         //ESTRUCTURAS DE ASIGNACIÓN CON VALOR
-        /*
-        for(int i=0;i<tokens.size();i++){
-            if(tokens.get(i).getLexicalComp().equals("TIPO_ENTERO")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("NUMERO_ENTERO")){
-                            System.out.println("Correcto");
+        for(int i=0;i<tokens2.size();i++){
+            if(tokens2.get(i).getLexicalComp().equals("TIPO_ENTERO") || tokens2.get(i).getLexicalComp().equals("TIPO_DECIMAL")
+            || tokens2.get(i).getLexicalComp().equals("TIPO_CADENA")){
+                if(tokens2.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens2.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens2.get(i+3).getLexicalComp().equals("NUMERO_ENTERO") || tokens2.get(i+3).getLexicalComp().equals("NUMERO_DECIMAL")
+                        || tokens2.get(i+3).getLexicalComp().equals("CADENA")){
+                            if(tokens2.get(i+4).getLexicalComp().equals("DELIMITADOR")){
+                                PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4)));
+                            }
                         }
                     }
                 }
             }
-            if(tokens.get(i).getLexicalComp().equals("TIPO_DECIMAL")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("NUMERO_DECIMAL")){
-                            System.out.println("Correcto");
-                        }
-                    }
-                }
-            }
-            if(tokens.get(i).getLexicalComp().equals("TIPO_CADENA")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("CADENA")){
-                            System.out.println("Correcto");
-                        }
-                    }
-                }
-            }
+        }    
+        System.out.println(PD1.get(0).Identificador);
+            /*
             if(tokens.get(i).getLexicalComp().equals("TIPO_HORA")){
                 if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
                     if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
@@ -1089,7 +1078,7 @@ public class Compilador extends javax.swing.JFrame {
                 }
             }
         }
-        
+        */
         //ERRORES SINTACTICOS
         
         
@@ -1384,7 +1373,29 @@ public class Compilador extends javax.swing.JFrame {
     }
 
     private void semanticAnalysis() {
-        
+        for(Producciones id: PD1){
+            if(id.TipoDeDato.getLexicalComp().equals("TIPO_ENTERO")){
+                if(id.ValorDeDato.getLexicalComp().equals("NUMERO_ENTERO")){
+                
+                }else{
+                    errors.add("-----> ERROR SEMANTICO 1:  La declaracion de tipo ent no cuenta con el valor correcto, Linea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                }
+            }
+            if(id.TipoDeDato.getLexicalComp().equals("TIPO_DECIMAL")){
+                if(id.ValorDeDato.getLexicalComp().equals("NUMERO_DECIMAL")){
+                
+                }else{
+                    errors.add("-----> ERROR SEMANTICO 2:  La declaracion de tipo dec no cuenta con el valor correcto, Linea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                }
+            }
+            if(id.TipoDeDato.getLexicalComp().equals("TIPO_CADENA")){
+                if(id.ValorDeDato.getLexicalComp().equals("CADENA")){
+                
+                }else{
+                    errors.add("-----> ERROR SEMANTICO 3:  La declaracion de tipo str no cuenta con el valor correcto, Linea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                }
+            }
+        }
     }
 
     private void colorAnalysis() {

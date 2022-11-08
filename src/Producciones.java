@@ -11,7 +11,17 @@ import compilerTools.Token;
  * @author chuy4
  */
 public class Producciones {
-    public Producciones(Token TipoDeDato,Token Identificador,Token Asignacion,Token ValorDeDato){
-        
+    Token TipoDeDato;
+    Token Identificador;
+    Token Asignacion;
+    Token ValorDeDato;
+    Token Delimitador;
+    
+    public Producciones(Token TipoDeDato,Token Identificador,Token Asignacion,Token ValorDeDato,Token Delimitador){
+        this.TipoDeDato = TipoDeDato;
+        this.Identificador = Identificador;
+        this.Asignacion = Asignacion;
+        this.ValorDeDato = ValorDeDato;
+        this.Delimitador = Delimitador;
     }
 }

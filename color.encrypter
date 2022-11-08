@@ -1,12 +1,3 @@
-ent v#alf = 20
-dec vlsa = 20.40
-str vla = 'hola'
-bool v = 20 v#al
-#
-'
-''
-'HALS
-true
-false
-+-*
-++++++++++++++++++++++
+ent vl = 20;
+dec vl = 20.40;
+str flds = 'Hola';
