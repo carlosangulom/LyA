@@ -41,11 +41,14 @@ public class Compilador extends javax.swing.JFrame {
     private Directory directorio;
     private ArrayList<Token> tokens1;
     private ArrayList<Token> tokens2;
+    private ArrayList<Token> tokens3;
+    private ArrayList<Token> tokens4;
     private ArrayList<String> errors;
     private ArrayList<TextColor> textsColor;
     private Timer timerKeyReleased;
     private ArrayList<Production> identProd;
     private HashMap<String, String> identificadores;
+    private HashMap<String, String> identificadoresTV;
     private boolean codeHasBeenCompiled = false;
     private int cont = 0;
     private ArrayList<Producciones> PD1;
@@ -91,10 +94,13 @@ public class Compilador extends javax.swing.JFrame {
         a.setLocationRelativeTo(this);
         tokens1 = new ArrayList<>();
         tokens2 = new ArrayList<>();
+        tokens3 = new ArrayList<>();
+        tokens4 = new ArrayList<>();
         errors = new ArrayList<>();
         textsColor = new ArrayList<>();
         identProd = new ArrayList<>();
         identificadores = new HashMap<>();
+        identificadoresTV = new HashMap<>();
         PD1 = new ArrayList<>();
         Functions.setAutocompleterJTextComponent(new String[]{}, jtpCode, () -> {
             timerKeyReleased.restart();
@@ -157,7 +163,6 @@ public class Compilador extends javax.swing.JFrame {
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
@@ -656,15 +661,6 @@ public class Compilador extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem19);
 
-        jMenuItem20.setText("Operador aritmetico");
-        jMenuItem20.setActionCommand("Operador aritmético");
-        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem20ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem20);
-
         jMenuItem22.setText("Bool");
         jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -709,7 +705,7 @@ public class Compilador extends javax.swing.JFrame {
 
     private void btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompilarActionPerformed
         if (getTitle().contains("*") || getTitle().equals(title)) {
-            if (directorio.Save()) {
+            if (directorio.Save()) {              
                 compile();
             }
         } else {
@@ -909,12 +905,6 @@ public class Compilador extends javax.swing.JFrame {
         a.setVisible(true);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
-    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-        a.Limpiar();
-        operadorAritmetico();
-        a.setVisible(true);
-    }//GEN-LAST:event_jMenuItem20ActionPerformed
-
     private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
         a.Limpiar();
         bool();
@@ -948,6 +938,8 @@ public class Compilador extends javax.swing.JFrame {
                 }
                 tokens1.add(token);
                 tokens2.add(token);
+                tokens3.add(token);
+                tokens4.add(token);
             }
         } catch (FileNotFoundException ex) {
             System.out.println("El archivo no pudo ser encontrado... " + ex.getMessage());
@@ -960,442 +952,642 @@ public class Compilador extends javax.swing.JFrame {
         //COMPONENTES LEXICOS (MENSAJE DE ERRORES)
         for(int i=0; i < tokens1.size(); i++){
             if(tokens1.get(i).getLexicalComp().equals("ERROR_X")){
-                errors.add("-----> ERROR LEXICO X:  Error desconocido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
+                errors.add("-----> ERROR LÉXICO X:  Error desconocido, Línea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
             if(tokens1.get(i).getLexicalComp().equals("ERROR_1")){
-                errors.add("-----> ERROR LEXICO 1:  El identificador tiene caracteres no validos, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
+                errors.add("-----> ERROR LÉXICO 1:  El identificador tiene caracteres no validos, Línea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
             if(tokens1.get(i).getLexicalComp().equals("ERROR_2")){
-                errors.add("-----> ERROR LEXICO 2:  Este caracter no es valido de esta manera, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
+                errors.add("-----> ERROR LÉXICO 2:  Este carácter no es valido de esta manera, Línea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
             if(tokens1.get(i).getLexicalComp().equals("ERROR_3")){
-                errors.add("-----> ERROR LEXICO 3:  Falta una comilla en la cadena, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
+                errors.add("-----> ERROR LÉXICO 3:  Falta una comilla en la cadena, Línea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
             if(tokens1.get(i).getLexicalComp().equals("ERROR_4")){
-                errors.add("-----> ERROR LEXICO 4:  Caracter no valido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
+                errors.add("-----> ERROR LÉXICO 4:  Carácter no valido, Línea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
             if(tokens1.get(i).getLexicalComp().equals("ERROR_5")){
-                errors.add("-----> ERROR LEXICO 5:  El numero entero no es valido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
+                errors.add("-----> ERROR LÉXICO 5:  El número entero no es valido, Línea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
             if(tokens1.get(i).getLexicalComp().equals("ERROR_6")){
-                errors.add("-----> ERROR LEXICO 6:  El numero decimal no es valido, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
-            }
-            if(tokens1.get(i).getLexicalComp().equals("ERROR_7")){
-                errors.add("-----> ERROR LEXICO 7:  Falta agregar datos al dia, Linea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
+                errors.add("-----> ERROR LÉXICO 6:  Falta agregar datos al día, Línea["+tokens1.get(i).getLine()+"], Columna["+tokens1.get(i).getColumn()+"]");
             }
         }
         //ELIMINACION DE ERRORES LEXICOS
         for(Token id: tokens1){
             if(id.getLexicalComp().contains("ERROR_X")){
                 tokens2.remove(id);
+                tokens3.remove(id);
+                tokens4.remove(id);
             }
             if(id.getLexicalComp().contains("ERROR_1")){
                 tokens2.remove(id);
+                tokens3.remove(id);
+                tokens4.remove(id);
             }
             if(id.getLexicalComp().contains("ERROR_2")){
                 tokens2.remove(id);
+                tokens3.remove(id);
+                tokens4.remove(id);
             }
             if(id.getLexicalComp().contains("ERROR_3")){
                 tokens2.remove(id);
+                tokens3.remove(id);
+                tokens4.remove(id);
             }
             if(id.getLexicalComp().contains("ERROR_4")){
                 tokens2.remove(id);
+                tokens3.remove(id);
+                tokens4.remove(id);
             }
             if(id.getLexicalComp().contains("ERROR_5")){
                 tokens2.remove(id);
+                tokens3.remove(id);
+                tokens4.remove(id);
             }
             if(id.getLexicalComp().contains("ERROR_6")){
                 tokens2.remove(id);
-            }
-            if(id.getLexicalComp().contains("ERROR_7")){
-                tokens2.remove(id);
+                tokens3.remove(id);
+                tokens4.remove(id);
             }
         }
+        //ESTRUCTURAS DE ASIGNACIÓN
         
-        
-        System.out.println(tokens2);
         //ESTRUCTURAS DE ASIGNACIÓN CON VALOR
         for(int i=0;i<tokens2.size();i++){
-            if(tokens2.get(i).getLexicalComp().equals("TIPO_ENTERO") || tokens2.get(i).getLexicalComp().equals("TIPO_DECIMAL")
-            || tokens2.get(i).getLexicalComp().equals("TIPO_CADENA")){
+            if(tokens2.get(i).getLexicalComp().equals("TIPO_ENTERO")
+            || tokens2.get(i).getLexicalComp().equals("TIPO_CADENA") || tokens2.get(i).getLexicalComp().equals("TIPO_BOOL")){
                 if(tokens2.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
                     if((tokens2.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens2.get(i+3).getLexicalComp().equals("NUMERO_ENTERO") || tokens2.get(i+3).getLexicalComp().equals("NUMERO_DECIMAL")
-                        || tokens2.get(i+3).getLexicalComp().equals("CADENA")){
+                        if(tokens2.get(i+3).getLexicalComp().equals("NUMERO_ENTERO")
+                        || tokens2.get(i+3).getLexicalComp().equals("CADENA") || tokens2.get(i+3).getLexicalComp().equals("BOOL")
+                        || tokens2.get(i+3).getLexicalComp().equals("HORA") || tokens2.get(i+3).getLexicalComp().equals("DIAS")){
                             if(tokens2.get(i+4).getLexicalComp().equals("DELIMITADOR")){
-                                PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4)));
+                                PD1.add(PD2 = new Producciones(tokens3.get(i),tokens3.get(i+1),tokens3.get(i+2),tokens3.get(i+3),tokens3.get(i+4)));
+                                
+                            }else{
+                                errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
                             }
+                        }else{
+                            errors.add("-----> ERROR SINTÁCTICO 3:  Falta agregar el valor y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
                         }
+                    }else{
+                        errors.add("-----> ERROR SINTÁCTICO 2:  Falta agregar el = y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
                     }
-                }
-            }
-        }    
-        System.out.println(PD1.get(0).Identificador);
-            /*
-            if(tokens.get(i).getLexicalComp().equals("TIPO_HORA")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("HORA")){
-                            System.out.println("Correcto");
-                        }
-                    }
-                }
-            }
-            if(tokens.get(i).getLexicalComp().equals("TIPO_DIAS")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("DIAS")){
-                            System.out.println("Correcto");
-                        }
-                    }
-                }
-            }
-            if(tokens.get(i).getLexicalComp().equals("TIPO_BOOL")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("BOOL")){
-                            System.out.println("Correcto");
-                        }
-                    }
-                }
-            }
-            if(tokens.get(i).getLexicalComp().equals("TIPO_MEDICAMENTO")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("VALOR_MEDICAMENTO")){
-                            System.out.println("Correcto");
-                        }
-                    }
-                }
-            }
-            if(tokens.get(i).getLexicalComp().equals("TIPO_RUTINA")){
-                if(tokens.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
-                    if((tokens.get(i+2).getLexicalComp().equals("ASIGNACION"))){
-                        if(tokens.get(i+3).getLexicalComp().equals("VALOR_RUTINA")){
-                            System.out.println("Correcto");
-                        }
-                    }
+                }else{
+                    errors.add("-----> ERROR SINTÁCTICO 1:  Falta agregar el identificador y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
                 }
             }
         }
-        */
-        //ERRORES SINTACTICOS
+        //ESTRUCTURAS DE ASIGNACION CON VALOR PARA DIAS
+        for(int i=0;i<tokens2.size();i++){
+            if(tokens2.get(i).getLexicalComp().equals("TIPO_DIAS")){
+                if(tokens2.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if(tokens2.get(i+2).getLexicalComp().equals("ASIGNACION")){
+                        if(tokens2.get(i+3).getLexicalComp().equals("MENOR_QUE")){
+                            if(tokens2.get(i+4).getLexicalComp().equals("NUMERO_ENTERO")
+                            || tokens2.get(i+4).getLexicalComp().equals("CADENA") || tokens2.get(i+4).getLexicalComp().equals("BOOL")
+                            || tokens2.get(i+4).getLexicalComp().equals("HORA") || tokens2.get(i+4).getLexicalComp().equals("DIAS")){
+                                if(tokens2.get(i+5).getLexicalComp().equals("MAYOR_QUE")){
+                                    if(tokens2.get(i+6).getLexicalComp().equals("DELIMITADOR")){
+                                        PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6)));
+                                    }else{
+                                        errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                    }
+                                }else{
+                                    errors.add("-----> ERROR SINTÁCTICO 6:  Falta agregar el > y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                }
+                            }else{
+                                errors.add("-----> ERROR SINTÁCTICO 3:  Falta agregar el valor y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                            }
+                        }else{
+                            errors.add("-----> ERROR SINTÁCTICO 5:  Falta agregar el < y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                        }
+                    }else{
+                        errors.add("-----> ERROR SINTÁCTICO 2:  Falta agregar el = y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                    }
+                }else{
+                    errors.add("-----> ERROR SINTÁCTICO 1:  Falta agregar el identificador y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                }
+            }
+        }
+        //ESTRUCTURAS DE ASIGNACIÓN CON VALOR PARA HORA
+        for(int i=0;i<tokens2.size();i++){
+            if(tokens2.get(i).getLexicalComp().equals("TIPO_HORA")){
+                if(tokens2.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens2.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens2.get(i+3).getLexicalComp().equals("MENOR_QUE")){
+                            if(tokens2.get(i+4).getLexicalComp().equals("NUMERO_ENTERO")
+                            || tokens2.get(i+4).getLexicalComp().equals("CADENA") || tokens2.get(i+4).getLexicalComp().equals("BOOL")
+                            || tokens2.get(i+4).getLexicalComp().equals("HORA") || tokens2.get(i+4).getLexicalComp().equals("DIAS")){
+                                if(tokens2.get(i+5).getLexicalComp().equals("COMA")){
+                                    if(tokens2.get(i+6).getLexicalComp().equals("NUMERO_ENTERO")
+                                    || tokens2.get(i+6).getLexicalComp().equals("CADENA") || tokens2.get(i+6).getLexicalComp().equals("BOOL")
+                                    || tokens2.get(i+6).getLexicalComp().equals("HORA") || tokens2.get(i+6).getLexicalComp().equals("DIAS")){
+                                        if(tokens2.get(i+7).getLexicalComp().equals("COMA")){
+                                            if(tokens2.get(i+8).getLexicalComp().equals("NUMERO_ENTERO")
+                                            || tokens2.get(i+8).getLexicalComp().equals("CADENA") || tokens2.get(i+8).getLexicalComp().equals("BOOL")
+                                            || tokens2.get(i+8).getLexicalComp().equals("HORA") || tokens2.get(i+8).getLexicalComp().equals("DIAS")){
+                                                if(tokens2.get(i+9).getLexicalComp().equals("COMA")){
+                                                    if(tokens2.get(i+10).getLexicalComp().equals("NUMERO_ENTERO")
+                                                    || tokens2.get(i+10).getLexicalComp().equals("CADENA") || tokens2.get(i+10).getLexicalComp().equals("BOOL")
+                                                    || tokens2.get(i+10).getLexicalComp().equals("HORA") || tokens2.get(i+10).getLexicalComp().equals("DIAS")){
+                                                        if(tokens2.get(i+11).getLexicalComp().equals("COMA")){
+                                                            if(tokens2.get(i+12).getLexicalComp().equals("NUMERO_ENTERO")
+                                                            || tokens2.get(i+12).getLexicalComp().equals("CADENA") || tokens2.get(i+12).getLexicalComp().equals("BOOL")
+                                                            || tokens2.get(i+12).getLexicalComp().equals("HORA") || tokens2.get(i+12).getLexicalComp().equals("DIAS")){
+                                                                if(tokens2.get(i+13).getLexicalComp().equals("MAYOR_QUE")){
+                                                                    if(tokens2.get(i+14).getLexicalComp().equals("DELIMITADOR")){
+                                                                        PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6),tokens2.get(i+7),tokens2.get(i+8),tokens2.get(i+9),tokens2.get(i+10),tokens2.get(i+11),tokens2.get(i+12),tokens2.get(i+13),tokens2.get(i+14)));
+                                                                    }else{
+                                                                        errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                    }
+                                                                }else{
+                                                                    errors.add("-----> ERROR SINTÁCTICO 6:  Falta agregar el > y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                }
+                                                            }else{
+                                                                errors.add("-----> ERROR SINTÁCTICO 8:  Falta agregar la hora y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                            }
+                                                        }else{
+                                                            if(tokens2.get(i+11).getLexicalComp().equals("MAYOR_QUE")){
+                                                                if(tokens2.get(i+12).getLexicalComp().equals("DELIMITADOR")){
+                                                                    PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6),tokens2.get(i+7),tokens2.get(i+8),tokens2.get(i+9),tokens2.get(i+10),null,null,tokens2.get(i+11),tokens2.get(i+12)));
+                                                                }else{
+                                                                    errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                }
+                                                            }else{
+                                                                errors.add("-----> ERROR SINTÁCTICO 7:  Falta agregar el > o una , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                            }
+                                                        }
+                                                    }else{
+                                                        errors.add("-----> ERROR SINTÁCTICO 8:  Falta agregar la hora y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                    }
+                                                }else{
+                                                    if(tokens2.get(i+9).getLexicalComp().equals("MAYOR_QUE")){
+                                                        if(tokens2.get(i+10).getLexicalComp().equals("DELIMITADOR")){
+                                                            PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6),tokens2.get(i+7),tokens2.get(i+8),null,null,null,null,tokens2.get(i+9),tokens2.get(i+10)));
+                                                        }else{
+                                                            errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                        }
+                                                    }else{
+                                                        errors.add("-----> ERROR SINTÁCTICO 7:  Falta agregar el > o una , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                    }
+                                                }
+                                            }else{
+                                                errors.add("-----> ERROR SINTÁCTICO 8:  Falta agregar la hora y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                            }
+                                        }else{
+                                            if(tokens2.get(i+7).getLexicalComp().equals("MAYOR_QUE")){
+                                                if(tokens2.get(i+8).getLexicalComp().equals("DELIMITADOR")){
+                                                    PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6),null,null,null,null,null,null,tokens2.get(i+7),tokens2.get(i+8)));
+                                                }else{
+                                                    errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                }
+                                            }else{
+                                                errors.add("-----> ERROR SINTÁCTICO 7:  Falta agregar el > o una , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                            }
+                                        }
+                                    }else{
+                                        errors.add("-----> ERROR SINTÁCTICO 8:  Falta agregar la hora y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                    }
+                                }else{
+                                    if(tokens2.get(i+5).getLexicalComp().equals("MAYOR_QUE")){
+                                        if(tokens2.get(i+6).getLexicalComp().equals("DELIMITADOR")){
+                                            PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),null,null,null,null,null,null,null,null,tokens2.get(i+5),tokens2.get(i+6)));
+                                        }else{
+                                            errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                        }
+                                    }else{
+                                        errors.add("-----> ERROR SINTÁCTICO 7:  Falta agregar el > o una , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                    }
+                                }
+                            }else{
+                                errors.add("-----> ERROR SINTÁCTICO 8:  Falta agregar la hora y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                            }
+                        }else{
+                            errors.add("-----> ERROR SINTÁCTICO 5:  Falta agregar el < y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                        }
+                    }else{
+                        errors.add("-----> ERROR SINTÁCTICO 2:  Falta agregar el = y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                    }
+                }else{
+                    errors.add("-----> ERROR SINTÁCTICO 1:  Falta agregar el identificador y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                }
+            }
+        }
+        //ESTRUCTURA DE ASIGNACION CON VALOR A MEDICAMENTOS
+        for(int i=0;i<tokens2.size();i++){
+            if(tokens2.get(i).getLexicalComp().equals("TIPO_MEDICAMENTO")){
+                if(tokens2.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens2.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens2.get(i+3).getLexicalComp().equals("MENOR_QUE")){
+                            if(tokens2.get(i+4).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+4).getLexicalComp().equals("NUMERO_ENTERO")
+                            || tokens2.get(i+4).getLexicalComp().equals("BOOL")
+                            || tokens2.get(i+4).getLexicalComp().equals("CADENA") || tokens2.get(i+4).getLexicalComp().equals("HORA") 
+                            || tokens2.get(i+4).getLexicalComp().equals("DIAS")){
+                                if(tokens2.get(i+5).getLexicalComp().equals("COMA")){
+                                    if(tokens2.get(i+6).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+6).getLexicalComp().equals("NUMERO_ENTERO")
+                                    || tokens2.get(i+6).getLexicalComp().equals("BOOL")
+                                    || tokens2.get(i+6).getLexicalComp().equals("CADENA") || tokens2.get(i+6).getLexicalComp().equals("HORA") 
+                                    || tokens2.get(i+6).getLexicalComp().equals("DIAS")){
+                                        if(tokens2.get(i+7).getLexicalComp().equals("COMA")){
+                                            if(tokens2.get(i+8).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+8).getLexicalComp().equals("NUMERO_ENTERO")
+                                            || tokens2.get(i+8).getLexicalComp().equals("BOOL")
+                                            || tokens2.get(i+8).getLexicalComp().equals("CADENA") || tokens2.get(i+8).getLexicalComp().equals("HORA") 
+                                            || tokens2.get(i+8).getLexicalComp().equals("DIAS")){
+                                                if(tokens2.get(i+9).getLexicalComp().equals("MAYOR_QUE")){
+                                                    if(tokens2.get(i+10).getLexicalComp().equals("DELIMITADOR")){
+                                                        PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6),tokens2.get(i+7),tokens2.get(i+8),tokens2.get(i+9),tokens2.get(i+10)));
+                                                    }else{
+                                                        errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                    }
+                                                }else{
+                                                    errors.add("-----> ERROR SINTÁCTICO 6:  Falta agregar el > y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                }
+                                            }else{
+                                                errors.add("-----> ERROR SINTÁCTICO 12:  Falta agregar la cantidad del medicamento y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                            }
+                                        }else{
+                                            errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                        }
+                                    }else{
+                                        errors.add("-----> ERROR SINTÁCTICO 11:  Falta agregar los gramos del medicamento y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                    }
+                                }else{
+                                    errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                }
+                            }else{
+                                errors.add("-----> ERROR SINTÁCTICO 10:  Falta agregar el nombre del medicamento y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                            }
+                        }else{
+                            errors.add("-----> ERROR SINTÁCTICO 5:  Falta agregar el < y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                        }
+                    }else{
+                        errors.add("-----> ERROR SINTÁCTICO 2:  Falta agregar el = y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                    }
+                }else{
+                    errors.add("-----> ERROR SINTÁCTICO 1:  Falta agregar el identificador y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                }
+            }
+        }
+        //ESTRUCTURA DE ASIGNACION CON VALOR A RUTINA
+        for(int i=0;i<tokens2.size();i++){
+            if(tokens2.get(i).getLexicalComp().equals("TIPO_RUTINA")){
+                if(tokens2.get(i+1).getLexicalComp().equals("IDENTIFICADOR")){
+                    if((tokens2.get(i+2).getLexicalComp().equals("ASIGNACION"))){
+                        if(tokens2.get(i+3).getLexicalComp().equals("PARENTESIS_A")){
+                            if(tokens2.get(i+4).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+4).getLexicalComp().equals("NUMERO_ENTERO")
+                            || tokens2.get(i+4).getLexicalComp().equals("BOOL")
+                            || tokens2.get(i+4).getLexicalComp().equals("CADENA") || tokens2.get(i+4).getLexicalComp().equals("HORA") 
+                            || tokens2.get(i+4).getLexicalComp().equals("DIAS")){
+                                if(tokens2.get(i+5).getLexicalComp().equals("COMA")){
+                                    if(tokens2.get(i+6).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+6).getLexicalComp().equals("NUMERO_ENTERO")
+                                    || tokens2.get(i+6).getLexicalComp().equals("BOOL")
+                                    || tokens2.get(i+6).getLexicalComp().equals("CADENA") || tokens2.get(i+6).getLexicalComp().equals("HORA") 
+                                    || tokens2.get(i+6).getLexicalComp().equals("DIAS")){
+                                        if(tokens2.get(i+7).getLexicalComp().equals("COMA")){
+                                            if(tokens2.get(i+8).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+8).getLexicalComp().equals("NUMERO_ENTERO")
+                                            || tokens2.get(i+8).getLexicalComp().equals("BOOL")
+                                            || tokens2.get(i+8).getLexicalComp().equals("CADENA") || tokens2.get(i+8).getLexicalComp().equals("HORA") 
+                                            || tokens2.get(i+8).getLexicalComp().equals("DIAS")){
+                                                if(tokens2.get(i+9).getLexicalComp().equals("COMA")){
+                                                    if(tokens2.get(i+10).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+10).getLexicalComp().equals("NUMERO_ENTERO")
+                                                    || tokens2.get(i+10).getLexicalComp().equals("BOOL")
+                                                    || tokens2.get(i+10).getLexicalComp().equals("CADENA") || tokens2.get(i+10).getLexicalComp().equals("HORA") 
+                                                    || tokens2.get(i+10).getLexicalComp().equals("DIAS")){
+                                                        if(tokens2.get(i+11).getLexicalComp().equals("PARENTESIS_C")){
+                                                            if(tokens2.get(i+12).getLexicalComp().equals("DELIMITADOR")){
+                                                                PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6),tokens2.get(i+7),tokens2.get(i+8),tokens2.get(i+9),tokens2.get(i+10),tokens2.get(i+11),tokens2.get(i+12)));
+                                                            }else{
+                                                               errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                            }
+                                                        }else{
+                                                            errors.add("-----> ERROR SINTÁCTICO 14:  Falta agregar el ) y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                        }
+                                                    }else{
+                                                        errors.add("-----> ERROR SINTÁCTICO 18:  Falta agregar el estado lógico y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                    }
+                                                }else{
+                                                    errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                }
+                                            }else{
+                                                errors.add("-----> ERROR SINTÁCTICO 17:  Falta agregar las horas y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                            }
+                                        }else{
+                                            errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                        }
+                                    }else{
+                                        errors.add("-----> ERROR SINTÁCTICO 16:  Falta agregar los días y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                    }
+                                }else{
+                                    errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                }
+                            }else{
+                                if(tokens2.get(i+4).getLexicalComp().equals("MENOR_QUE")){
+                                    if(tokens2.get(i+5).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+5).getLexicalComp().equals("NUMERO_ENTERO")
+                                    || tokens2.get(i+5).getLexicalComp().equals("BOOL")
+                                    || tokens2.get(i+5).getLexicalComp().equals("CADENA") || tokens2.get(i+5).getLexicalComp().equals("HORA") 
+                                    || tokens2.get(i+5).getLexicalComp().equals("DIAS")){
+                                        if(tokens2.get(i+6).getLexicalComp().equals("COMA")){
+                                            if(tokens2.get(i+7).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+7).getLexicalComp().equals("NUMERO_ENTERO")
+                                            || tokens2.get(i+7).getLexicalComp().equals("BOOL")
+                                            || tokens2.get(i+7).getLexicalComp().equals("CADENA") || tokens2.get(i+7).getLexicalComp().equals("HORA") 
+                                            || tokens2.get(i+7).getLexicalComp().equals("DIAS")){
+                                                if(tokens2.get(i+8).getLexicalComp().equals("COMA")){
+                                                    if(tokens2.get(i+9).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+9).getLexicalComp().equals("NUMERO_ENTERO")
+                                                    || tokens2.get(i+9).getLexicalComp().equals("BOOL")
+                                                    || tokens2.get(i+9).getLexicalComp().equals("CADENA") || tokens2.get(i+9).getLexicalComp().equals("HORA") 
+                                                    || tokens2.get(i+9).getLexicalComp().equals("DIAS")){
+                                                        if(tokens2.get(i+10).getLexicalComp().equals("MAYOR_QUE")){
+                                                            if(tokens2.get(i+11).getLexicalComp().equals("COMA")){
+                                                                if(tokens2.get(i+12).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+12).getLexicalComp().equals("NUMERO_ENTERO")
+                                                                || tokens2.get(i+12).getLexicalComp().equals("BOOL")
+                                                                || tokens2.get(i+12).getLexicalComp().equals("CADENA") || tokens2.get(i+12).getLexicalComp().equals("HORA") 
+                                                                || tokens2.get(i+12).getLexicalComp().equals("DIAS")){
+                                                                    if(tokens2.get(i+13).getLexicalComp().equals("COMA")){
+                                                                        if(tokens2.get(i+14).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+14).getLexicalComp().equals("NUMERO_ENTERO")
+                                                                        || tokens2.get(i+14).getLexicalComp().equals("BOOL")
+                                                                        || tokens2.get(i+14).getLexicalComp().equals("CADENA") || tokens2.get(i+14).getLexicalComp().equals("HORA") 
+                                                                        || tokens2.get(i+14).getLexicalComp().equals("DIAS")){
+                                                                            if(tokens2.get(i+15).getLexicalComp().equals("COMA")){
+                                                                                if(tokens2.get(i+16).getLexicalComp().equals("IDENTIFICADOR") || tokens2.get(i+16).getLexicalComp().equals("NUMERO_ENTERO")
+                                                                                || tokens2.get(i+16).getLexicalComp().equals("BOOL")
+                                                                                || tokens2.get(i+16).getLexicalComp().equals("CADENA") || tokens2.get(i+16).getLexicalComp().equals("HORA") 
+                                                                                || tokens2.get(i+16).getLexicalComp().equals("DIAS")){
+                                                                                    if(tokens2.get(i+17).getLexicalComp().equals("PARENTESIS_C")){
+                                                                                        if(tokens2.get(i+18).getLexicalComp().equals("DELIMITADOR")){
+                                                                                            PD1.add(PD2 = new Producciones(tokens2.get(i),tokens2.get(i+1),tokens2.get(i+2),tokens2.get(i+3),tokens2.get(i+4),tokens2.get(i+5),tokens2.get(i+6),tokens2.get(i+7),tokens2.get(i+8),tokens2.get(i+9),tokens2.get(i+10),tokens2.get(i+11),tokens2.get(i+12),tokens2.get(i+13),tokens2.get(i+14),tokens2.get(i+15),tokens2.get(i+16),tokens2.get(i+17),tokens2.get(i+18)));
+                                                                                        }else{
+                                                                                            errors.add("-----> ERROR SINTÁCTICO 4:  Falta agregar el delimitador en la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                                        }
+                                                                                    }else{
+                                                                                        errors.add("-----> ERROR SINTÁCTICO 14:  Falta agregar el ) y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                                    }
+                                                                                }else{
+                                                                                    errors.add("-----> ERROR SINTÁCTICO 18:  Falta agregar el estado lógico y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                                }
+                                                                            }else{
+                                                                                errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                            }
+                                                                        }else{
+                                                                            errors.add("-----> ERROR SINTÁCTICO 17:  Falta agregar las horas y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                        }
+                                                                    }else{
+                                                                        errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                    }
+                                                                }else{
+                                                                    errors.add("-----> ERROR SINTÁCTICO 16:  Falta agregar los días y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                                }
+                                                            }else{
+                                                                errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                            }
+                                                        }else{
+                                                            errors.add("-----> ERROR SINTÁCTICO 6:  Falta agregar el > y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                        }
+                                                    }else{
+                                                        errors.add("-----> ERROR SINTÁCTICO 12:  Falta agregar la cantidad del medicamento y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                    }
+                                                }else{
+                                                    errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                                }
+                                            }else{
+                                                errors.add("-----> ERROR SINTÁCTICO 11:  Falta agregar los gramos del medicamento y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                            }
+                                        }else{
+                                            errors.add("-----> ERROR SINTÁCTICO 9:  Falta agregar la , y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                        }
+                                    }else{
+                                        errors.add("-----> ERROR SINTÁCTICO 10:  Falta agregar el nombre del medicamento y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                    }
+                                }else{
+                                    errors.add("-----> ERROR SINTÁCTICO 15:  Falta agregar el < o el medicamento y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                                }
+                            }
+                        }else{
+                            errors.add("-----> ERROR SINTÁCTICO 13:  Falta agregar el ( y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                        }
+                    }else{
+                        errors.add("-----> ERROR SINTÁCTICO 2:  Falta agregar el = y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                    }
+                }else{
+                    errors.add("-----> ERROR SINTÁCTICO 1:  Falta agregar el identificador y los demás elementos de la Asignación, Línea["+tokens2.get(i).getLine()+"], Columna["+tokens2.get(i).getColumn()+"]");
+                }
+            }
+        }
         
+        //ESTRUCTURA DE CICLOS FOR
         
-        /*
-        // Declaración de variables
-        //Errores de declaración de variables 20+
-        gramatica.group("VARIABLE_ERROR", tipos + " ASIGNACION " + valores, true, 20,
-                " x Error sintáctico {}: Falta el identificador en la declaración [#, %]");//Identificador no asignado
-        gramatica.group("VARIABLE_ERROR", tipos + " IDENTIFICADOR " + valores, true, 21,
-                " x Error sintáctico {}: Se debe utilizar el símbolo de asignación [#, %]");//Sin símbolo de asignación 
-        
-        //Tipo Entero
-        //Errores tipo entero 50+
-        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION VALOR_ENTERO", true);
-        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION (VALOR_DECIMAL | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 50,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo entero [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_ENTERO", "TIPO_ENTERO IDENTIFICADOR ASIGNACION", true, 51,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo Decimal
-        //Errores tipo decimal 60+
-        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION VALOR_DECIMAL", true);
-        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_CADENA | VALOR_HORA | VALOR_DIAS)", true, 60,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo decimal [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_DECIMAL", "TIPO_DECIMAL IDENTIFICADOR ASIGNACION", true, 61,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo Cadena
-        //Errores tipo cadena 70+
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION VALOR_CADENA", true);
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_HORA | VALOR_DIAS)", true, 70,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo cadena [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_CADENA", "TIPO_CADENA IDENTIFICADOR ASIGNACION", true, 71,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo Hora
-        //Errores Hora 80+
-        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION VALOR_HORA", true);
-        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_DIAS)", true, 80,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo hora [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_HORA", "TIPO_HORA IDENTIFICADOR ASIGNACION", true, 81,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        //Tipo días
-        //Errores Días 90+
-        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION VALOR_DIAS", true);
-        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS)", true, 90,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo día [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_DIAS", "TIPO_DIAS IDENTIFICADOR ASIGNACION", true, 91,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-                
-        //Tipo Rutina
-        //Error Rutina 100+
-        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION VALOR_RUTINA", true);
-        gramatica.group("VARIABLE_RUTINA", "TIPO_RUTINA IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_MEDICAMENTO)", true, 100,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
-        
-        //Tipo Medicamento
-        //Error medicamento 120+
-        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION VALOR_MEDICAMENTO", true);
-        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL | VALOR_CADENA | VALOR_HORAS | VALOR_DIAS | VALOR_RUTINA)", true, 120,
-                " x Error sintáctico {}: Se debe asignar un valor de tipo medicamento [#, %]");//Tipos incorrectos
-        gramatica.group("VARIABLE_MEDICAMENTO", "TIPO_MEDICAMENTO IDENTIFICADOR ASIGNACION", true, 121,
-                " x Error sintáctico {}: Se debe asignar un valor a la variable [#, %]");//Valor no asignado
-        
-        // Asignación de valores
-        gramatica.group("VALOR_ENTERO", "NUMERO_ENTERO", true);
-        gramatica.group("VALOR_DECIMAL", "NUMERO_DECIMAL", true);
-        gramatica.group("VALOR_BOOL", "BOOL", true);
-        gramatica.group("VALOR_CADENA", "CADENA", true);
-        gramatica.group("VALOR_HORA", "HORA", true);
-        gramatica.group("VALOR_DIAS", "MENOR_QUE DIAS MAYOR_QUE", true);
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true);
-        gramatica.group("VALOR_RUTINA", "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true);
-        
-        
-
-        //Errores de agrupación
-        gramatica.group("VALOR_AGRUPADO", "MENOR_QUE MAYOR_QUE", true, 92, 
-                " x Error sintáctico {}: Debe haber un valor entre <> [#, %]");
-
-        //Errores días
-        gramatica.group("VALOR_DIAS", "DIAS MAYOR_QUE", true, 92, 
-                " x Error sintáctico {}: El formato de los días debe ser <L,M,W,J,V,S,D> [#, %]");
-        gramatica.group("VALOR_DIAS", "MENOR_QUE DIAS", true, 92, 
-                " x Error sintáctico {}: El formato de los días debe ser <L,M,W,J,V,S,D> [#, %]");
-        
-        //Errores medicamento
-        //Parentesis faltantes
-        gramatica.group("VALOR_MEDICAMENTO", "(IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "(MENOR_QUE IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO)", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "( IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO)", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        
-        //Formato incorrecto
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE COMA (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");        
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) (IDENTIFICADOR | VALOR_ENTERO) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) (IDENTIFICADOR | VALOR_ENTERO) COMA MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) (IDENTIFICADOR | VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR |VALOR_ENTERO) MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA  MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA)  MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        gramatica.group("VALOR_MEDICAMENTO", "MENOR_QUE (IDENTIFICADOR | VALOR_CADENA) COMA (IDENTIFICADOR | VALOR_ENTERO) COMA MAYOR_QUE", true, 122, 
-                " x Error sintáctico {}: El formato de los medicamentos debe ser <'Nombre', Gramos => Ent, Cantidad => Ent> [#, %]");
-        
-        //Errores Rutina
-        //Parentesis faltantes
-        gramatica.group("VALOR_RUTINA", 
-                "(IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL)", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "(IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL)", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        
-        //Formato incorrecto
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");      
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA  PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA COMA PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA COMA COMA PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A COMA COMA COMA PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");        
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) COMA (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) COMA (IDENTIFICADOR | VALOR_DIAS) COMA (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) (IDENTIFICADOR | VALOR_BOOL) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-        gramatica.group("VALOR_RUTINA", 
-                "PARENTESIS_A (IDENTIFICADOR | VALOR_MEDICAMENTO) (IDENTIFICADOR | VALOR_DIAS)  (IDENTIFICADOR | SQUARE_A (VALOR_HORA (COMA VALOR_HORA)*) SQUARE_C) PARENTESIS_C", true, 102,
-                " x Error sintáctico {}: El formato de las rutinas debe ser (Medicamento => med, Días => dias, [Horas] => hora, servirAgua => bool) [#, %]");
-               
-           
-        
-        // Declarar tipos de datos
-        gramatica.group("VARIABLE_ERROR", "IDENTIFICADOR ASIGNACION (VALOR_ENTERO | VALOR_DECIMAL)", true, 22,
-                " x Error sintáctico {}: Se debe especificar el tipo de dato [#, %]");
-        
-        //Eliminar tipos de datos y operadores de asignación
-        gramatica.delete("TIPO_ENTERO", 23, 
-                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
-        gramatica.delete("TIPO_DECIMAL", 23, 
-                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
-        gramatica.delete("TIPO_CADENA", 23, 
-                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
-        gramatica.delete("TIPO_HORA", 23, 
-                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
-        gramatica.delete("TIPO_MEDICAMENTO", 23, 
-                " x Error sintáctico {}: El tipo de dato no está en una declaración [#, %]");
-        gramatica.delete("ASIGNACION", 23, 
-                " x Error sintáctico {}: El operador de asignación no está en una declaración [#, %]");
-        
-        //Eliminar valores
-        gramatica.delete("VALOR_ENTERO", 24, 
-                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
-        gramatica.delete("VALOR_DECIMAL", 24, 
-                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
-        gramatica.delete("VALOR_CADENA", 24, 
-                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
-        gramatica.delete("VALOR_HORA", 24, 
-                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
-        gramatica.delete("VALOR_DIAS", 24, 
-                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
-        gramatica.delete("VALOR_MEDICAMENTO", 24, 
-                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
-        gramatica.delete("VALOR_RUTINA", 24, 
-                " x Error sintáctico {}: El valor no está en una declaración [#, %]");
-        
-        //Agrupación de identificadores y parámetros
-        //gramatica.group("VALOR", valores, true);
-        //gramatica.group("VALOR", "IDENTIFICADOR", true);
-        //gramatica.group("PARAMETROS", "VALOR (COMA VALOR)+", true);
-        
-        //Agrupación de funciones
-        //gramatica.group("DEC_FUNCION", "FUNCION ");
-
-        /* Mostrar gramáticas */
+        //ESTRUCTURA DE CICLOS WHILE
         
     }
 
     private void semanticAnalysis() {
         for(Producciones id: PD1){
+            //ASIGNACION ENT
             if(id.TipoDeDato.getLexicalComp().equals("TIPO_ENTERO")){
                 if(id.ValorDeDato.getLexicalComp().equals("NUMERO_ENTERO")){
-                
+                    if(identificadores.containsKey(id.Identificador.getLexeme())){
+                        errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                    }else{
+                        identificadores.put(id.Identificador.getLexeme(),id.ValorDeDato.getLexeme());
+                        identificadoresTV.put(id.Identificador.getLexeme(),id.ValorDeDato.getLexicalComp());
+                    }
                 }else{
-                    errors.add("-----> ERROR SEMANTICO 1:  La declaracion de tipo ent no cuenta con el valor correcto, Linea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                    errors.add("-----> ERROR SEMÁNTICO 1:  La Asignación de tipo ent no cuenta con el valor correcto, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
                 }
             }
-            if(id.TipoDeDato.getLexicalComp().equals("TIPO_DECIMAL")){
-                if(id.ValorDeDato.getLexicalComp().equals("NUMERO_DECIMAL")){
-                
-                }else{
-                    errors.add("-----> ERROR SEMANTICO 2:  La declaracion de tipo dec no cuenta con el valor correcto, Linea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
-                }
-            }
+            //ASIGNACION STR
             if(id.TipoDeDato.getLexicalComp().equals("TIPO_CADENA")){
                 if(id.ValorDeDato.getLexicalComp().equals("CADENA")){
-                
+                    if(identificadores.containsKey(id.Identificador.getLexeme())){
+                        errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                    }else{
+                        identificadores.put(id.Identificador.getLexeme(),id.ValorDeDato.getLexeme());
+                        identificadoresTV.put(id.Identificador.getLexeme(),id.ValorDeDato.getLexicalComp());
+                    }
                 }else{
-                    errors.add("-----> ERROR SEMANTICO 3:  La declaracion de tipo str no cuenta con el valor correcto, Linea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                    errors.add("-----> ERROR SEMÁNTICO 2:  La Asignación de tipo str no cuenta con el valor correcto, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                }
+            }
+            //ASIGNACION BOOL
+            if(id.TipoDeDato.getLexicalComp().equals("TIPO_BOOL")){
+                if(id.ValorDeDato.getLexicalComp().equals("BOOL")){
+                    if(identificadores.containsKey(id.Identificador.getLexeme())){
+                        errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                    }else{
+                        identificadores.put(id.Identificador.getLexeme(),id.ValorDeDato.getLexeme());
+                        identificadoresTV.put(id.Identificador.getLexeme(),id.ValorDeDato.getLexicalComp());
+                    }
+                }else{
+                    errors.add("-----> ERROR SEMÁNTICO 3:  La Asignación de tipo bool no cuenta con el valor correcto, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                }
+            }
+            //ASIGNACION DIAS
+            if(id.TipoDeDato.getLexicalComp().equals("TIPO_DIAS")){
+                if(id.Dias.getLexicalComp().equals("DIAS")){
+                    if(identificadores.containsKey(id.Identificador.getLexeme())){
+                        errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                    }else{
+                        identificadores.put(id.Identificador.getLexeme(),id.Dias.getLexeme());
+                        identificadoresTV.put(id.Identificador.getLexeme(),id.Dias.getLexicalComp());
+                    }
+                }else{
+                    errors.add("-----> ERROR SEMÁNTICO 4:  La Asignación de tipo dias no cuenta con el valor correcto, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                }
+            }
+            //ASIGNACION MEDICAMENTOS
+            if(id.TipoDeDato.getLexicalComp().equals("TIPO_MEDICAMENTO")){
+                if(id.Cadena.getLexicalComp().equals("CADENA") || id.Cadena.getLexicalComp().equals("IDENTIFICADOR")){
+                    if(id.Cadena.getLexicalComp().equals("IDENTIFICADOR")){
+                        if(identificadores.containsKey(id.Cadena.getLexeme())){
+                            if(identificadoresTV.get(id.Cadena.getLexeme()).equals("CADENA")){
+                                if(id.Entero1.getLexicalComp().equals("NUMERO_ENTERO") || id.Entero1.getLexicalComp().equals("IDENTIFICADOR")){
+                                    if(id.Entero1.getLexicalComp().equals("IDENTIFICADOR")){
+                                        if(identificadores.containsKey(id.Entero1.getLexeme())){
+                                            if(identificadoresTV.get(id.Entero1.getLexeme()).equals("NUMERO_ENTERO")){
+                                                if(id.Entero2.getLexicalComp().equals("NUMERO_ENTERO") || id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                                    if(id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                                        if(identificadores.containsKey(id.Entero2.getLexeme())){
+                                                            if(identificadoresTV.get(id.Entero2.getLexeme()).equals("NUMERO_ENTERO")){
+                                                                if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                                                    errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                                }else{
+                                                                    identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                                                }
+                                                            }else{
+                                                                errors.add("-----> ERROR SEMÁNTICO 10:  El identificador en la Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                            }
+                                                        }else{
+                                                            errors.add("-----> ERROR SEMÁNTICO 8:  El identificador en la Asignación de tipo med no cuenta con valor asignado, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                        }
+                                                    }else{
+                                                        if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                                            errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                        }else{
+                                                            identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                                        }
+                                                    }
+                                                }else{
+                                                    errors.add("-----> ERROR SEMÁNTICO 7:  La Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                }
+                                            }else{
+                                                errors.add("-----> ERROR SEMÁNTICO 10:  El identificador en la Asignación de tipo med no cuenta con el valor correcto en los gramos del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                            }
+                                        }else{
+                                            errors.add("-----> ERROR SEMÁNTICO 8:  El identificador en la Asignación de tipo med no cuenta con valor asignado, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                        }
+                                    }else{
+                                        if(id.Entero2.getLexicalComp().equals("NUMERO_ENTERO") || id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                            if(id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                                if(identificadores.containsKey(id.Entero2.getLexeme())){
+                                                    if(identificadoresTV.get(id.Entero2.getLexeme()).equals("NUMERO_ENTERO")){
+                                                        if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                                            errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                        }else{
+                                                            identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                                        }
+                                                    }else{
+                                                        errors.add("-----> ERROR SEMÁNTICO 10:  El identificador en la Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                    }
+                                                }else{
+                                                    errors.add("-----> ERROR SEMÁNTICO 8:  El identificador en la Asignación de tipo med no cuenta con valor asignado, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                }
+                                            }else{
+                                                if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                                    errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                }else{
+                                                    identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                                }
+                                            }
+                                        }else{
+                                            errors.add("-----> ERROR SEMÁNTICO 7:  La Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                        }
+                                    }
+                                }else{
+                                    errors.add("-----> ERROR SEMÁNTICO 6:  La Asignación de tipo med no cuenta con el valor correcto en los gramos del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                }
+                            }else{
+                                errors.add("-----> ERROR SEMÁNTICO 9:  El identificador en la Asignación de tipo med no cuenta con el valor correcto en el nombre del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                            }
+                        }else{
+                            errors.add("-----> ERROR SEMÁNTICO 8:  El identificador en la Asignación de tipo med no cuenta con valor asignado, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                        }
+                    }else{
+                        if(id.Entero1.getLexicalComp().equals("NUMERO_ENTERO") || id.Entero1.getLexicalComp().equals("IDENTIFICADOR")){
+                            if(id.Entero1.getLexicalComp().equals("IDENTIFICADOR")){
+                                if(identificadores.containsKey(id.Entero1.getLexeme())){
+                                    if(identificadoresTV.get(id.Entero1.getLexeme()).equals("NUMERO_ENTERO")){
+                                        if(id.Entero2.getLexicalComp().equals("NUMERO_ENTERO") || id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                            if(id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                                if(identificadores.containsKey(id.Entero2.getLexeme())){
+                                                    if(identificadoresTV.get(id.Entero2.getLexeme()).equals("NUMERO_ENTERO")){
+                                                        if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                                            errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                        }else{
+                                                            identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                                        }
+                                                    }else{
+                                                        errors.add("-----> ERROR SEMÁNTICO 10:  El identificador en la Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                    }
+                                                }else{
+                                                    errors.add("-----> ERROR SEMÁNTICO 8:  El identificador en la Asignación de tipo med no cuenta con valor asignado, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                }
+                                            }else{
+                                                if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                                    errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                }else{
+                                                    identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                                }
+                                            }
+                                        }else{
+                                            errors.add("-----> ERROR SEMÁNTICO 7:  La Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                        }
+                                    }else{
+                                        errors.add("-----> ERROR SEMÁNTICO 10:  El identificador en la Asignación de tipo med no cuenta con el valor correcto en los gramos del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                    }
+                                }else{
+                                    errors.add("-----> ERROR SEMÁNTICO 8:  El identificador en la Asignación de tipo med no cuenta con valor asignado, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                }
+                            }else{
+                                if(id.Entero2.getLexicalComp().equals("NUMERO_ENTERO") || id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                    if(id.Entero2.getLexicalComp().equals("IDENTIFICADOR")){
+                                        if(identificadores.containsKey(id.Entero2.getLexeme())){
+                                            if(identificadoresTV.get(id.Entero2.getLexeme()).equals("NUMERO_ENTERO")){
+                                                if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                                    errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                                }else{
+                                                    identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                                }
+                                            }else{
+                                                errors.add("-----> ERROR SEMÁNTICO 10:  El identificador en la Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                            }
+                                        }else{
+                                            errors.add("-----> ERROR SEMÁNTICO 8:  El identificador en la Asignación de tipo med no cuenta con valor asignado, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                        }
+                                    }else{
+                                        if(identificadores.containsKey(id.Identificador.getLexeme())){
+                                            errors.add("-----> ERROR SEMÁNTICO 20:  El identificador ya ha sido usado en alguna Asignación, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                        }else{
+                                            identificadores.put(id.Identificador.getLexeme(),id.Cadena.getLexeme()+" , "+id.Entero1.getLexeme()+" , "+id.Entero2.getLexeme());
+                                        }
+                                    }
+                                }else{
+                                    errors.add("-----> ERROR SEMÁNTICO 7:  La Asignación de tipo med no cuenta con el valor correcto en la cantidad del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                                }
+                            }
+                        }else{
+                            errors.add("-----> ERROR SEMÁNTICO 6:  La Asignación de tipo med no cuenta con el valor correcto en los gramos del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
+                        }
+                    }
+                }else{
+                    errors.add("-----> ERROR SEMÁNTICO 5:  La Asignación de tipo med no cuenta con el valor correcto en el nombre del medicamento, Línea["+id.TipoDeDato.getLine()+"], Columna["+id.TipoDeDato.getColumn()+"]");
                 }
             }
         }
+        //ASIGNACION HORAS
+        
+        System.out.println(identificadores);
+        System.out.println(identificadoresTV);
     }
 
     private void colorAnalysis() {
@@ -1452,9 +1644,13 @@ public class Compilador extends javax.swing.JFrame {
         jtaOutputConsole.setText("");
         tokens1.clear();
         tokens2.clear();
+        tokens3.clear();
+        tokens4.clear();
         errors.clear();
         identProd.clear();
         identificadores.clear();
+        identificadoresTV.clear();
+        PD1.clear();
         codeHasBeenCompiled = false;
     }
     private void identificador(){
@@ -1496,33 +1692,21 @@ public class Compilador extends javax.swing.JFrame {
                 if(id.getLexicalComp().equals("NUMERO_ENTERO")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("NUMERO1");
-                    a.mostrarAutomata("NUMERO5","NUMERO",id.getLexeme(),"");
-                    cont++;
-                }
-                if(id.getLexicalComp().equals("NUMERO_DECIMAL")){
-                    a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("NUMERO1");
-                    a.mostrarAutomata("NUMERO4","NUMERO",id.getLexeme(),"");
+                    a.mostrarAutomata("NUMERO2","NUMERO",id.getLexeme(),"");
                     cont++;
                 }
                 if(id.getLexicalComp().equals("ERROR_4")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("NUMERO1");
-                    a.mostrarAutomata("NUMERO6","NUMERO",id.getLexeme(),"");
+                    a.mostrarAutomata("NUMERO4","NUMERO",id.getLexeme(),"");
                     cont++;
                 }
                 if(id.getLexicalComp().equals("ERROR_5")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("NUMERO1");
-                    a.mostrarAutomata("NUMERO2","NUMERO",id.getLexeme(),"");
-                    cont++;
-                }
-                if(id.getLexicalComp().equals("ERROR_6")){
-                    a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("NUMERO1");
                     a.mostrarAutomata("NUMERO3","NUMERO",id.getLexeme(),"");
                     cont++;
-                }
+                } 
             }
         }
     }
@@ -1714,52 +1898,46 @@ public class Compilador extends javax.swing.JFrame {
                     a.mostrarAutomata("TIPO DE DATO2","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
-                if(id.getLexicalComp().equals("TIPO_DECIMAL")){
+                if(id.getLexicalComp().equals("TIPO_MEDICAMENTO")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("TIPO DE DATO1");
                     a.mostrarAutomata("TIPO DE DATO3","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
-                if(id.getLexicalComp().equals("TIPO_MEDICAMENTO")){
+                if(id.getLexicalComp().equals("TIPO_CADENA")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("TIPO DE DATO1");
                     a.mostrarAutomata("TIPO DE DATO4","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
-                if(id.getLexicalComp().equals("TIPO_CADENA")){
+                if(id.getLexicalComp().equals("TIPO_BOOL")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("TIPO DE DATO1");
                     a.mostrarAutomata("TIPO DE DATO5","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
-                if(id.getLexicalComp().equals("TIPO_BOOL")){
+                if(id.getLexicalComp().equals("TIPO_HORA")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("TIPO DE DATO1");
                     a.mostrarAutomata("TIPO DE DATO6","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
-                if(id.getLexicalComp().equals("TIPO_HORA")){
+                if(id.getLexicalComp().equals("TIPO_DIAS")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("TIPO DE DATO1");
                     a.mostrarAutomata("TIPO DE DATO7","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
-                if(id.getLexicalComp().equals("TIPO_DIAS")){
+                if(id.getLexicalComp().equals("TIPO_RUTINA")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("TIPO DE DATO1");
                     a.mostrarAutomata("TIPO DE DATO8","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
-                if(id.getLexicalComp().equals("TIPO_RUTINA")){
-                    a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("TIPO DE DATO1");
-                    a.mostrarAutomata("TIPO DE DATO9","TIPO DE DATO",id.getLexeme(),"");
-                    cont++;
-                }
                 if(id.getLexicalComp().equals("ERROR_4")){
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("TIPO DE DATO1");
-                    a.mostrarAutomata("TIPO DE DATO10","TIPO DE DATO",id.getLexeme(),"");
+                    a.mostrarAutomata("TIPO DE DATO9","TIPO DE DATO",id.getLexeme(),"");
                     cont++;
                 }
             }
@@ -1775,26 +1953,26 @@ public class Compilador extends javax.swing.JFrame {
             for(Token id: tokens1){
                 if(id.getLexicalComp().equals("COMA")){
                     a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
-                    a.mostrarAutomata("SIGNO DE PUNTUACION2","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    a.mostrarAutomataO("SIGNO DE PUNTUACIÓN1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACIÓN2","SIGNO DE PUNTUACION",id.getLexeme(),"");
                     cont++;
                 }
                 if(id.getLexicalComp().equals("DELIMITADOR")){
                     a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
-                    a.mostrarAutomata("SIGNO DE PUNTUACION3","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    a.mostrarAutomataO("SIGNO DE PUNTUACIÓN1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACIÓN3","SIGNO DE PUNTUACION",id.getLexeme(),"");
                     cont++;
                 }
                 if(id.getLexicalComp().equals("DOS_PUNTOS")){
                     a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
-                    a.mostrarAutomata("SIGNO DE PUNTUACION4","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    a.mostrarAutomataO("SIGNO DE PUNTUACIÓN1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACIÓN4","SIGNO DE PUNTUACION",id.getLexeme(),"");
                     cont++;
                 }
                 if(id.getLexicalComp().equals("ERROR_4")){
                     a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("SIGNO DE PUNTACION1");
-                    a.mostrarAutomata("SIGNO DE PUNTUACION5","SIGNO DE PUNTUACION",id.getLexeme(),"");
+                    a.mostrarAutomataO("SIGNO DE PUNTUACIÓN1");
+                    a.mostrarAutomata("SIGNO DE PUNTUACIÓN5","SIGNO DE PUNTUACION",id.getLexeme(),"");
                     cont++;
                 }
             }
@@ -1869,14 +2047,14 @@ public class Compilador extends javax.swing.JFrame {
             for(Token id: tokens1){
                 if(id.getLexicalComp().equals("ASIGNACION")){
                     a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("ASIGNACION1");
-                    a.mostrarAutomata("ASIGNACION2","ASIGNACION",id.getLexeme(),"");
+                    a.mostrarAutomataO("ASIGNACIÓN1");
+                    a.mostrarAutomata("ASIGNACIÓN2","ASIGNACION",id.getLexeme(),"");
                     cont++;
                 }
                 if(id.getLexicalComp().equals("ERROR_4")){
                     a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("ASIGNACION1");
-                    a.mostrarAutomata("ASIGNACION3","ASIGNACION",id.getLexeme(),"");
+                    a.mostrarAutomataO("ASIGNACIÓN1");
+                    a.mostrarAutomata("ASIGNACIÓN3","ASIGNACION",id.getLexeme(),"");
                     cont++;
                 }
             }
@@ -1974,37 +2152,6 @@ public class Compilador extends javax.swing.JFrame {
                     a.nuevoAutomata(cont,id.getLexeme());
                     a.mostrarAutomataO("OPERADOR LOGICO1");
                     a.mostrarAutomata("OPERADOR LOGICO7","OPERADOR LOGICO",id.getLexeme(),"");
-                    cont++;
-                }
-            }
-        }
-    }
-    
-    private void operadorAritmetico(){
-        cont = 0;
-        if(tokens1.isEmpty()){
-            JOptionPane.showMessageDialog(this, "No hay codigo, por lo tanto no hay tokens",
-                        "ERROR DE TOKENS", JOptionPane.ERROR_MESSAGE);
-        }else{
-            for(Token id: tokens1){
-                if(id.getLexicalComp().equals("OP_ARITMETICO")){
-                    a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("OPERADOR ARITMETICO1");
-                    if(id.getLexeme().equals("+")){
-                        a.mostrarAutomata("OPERADOR ARITMETICO2","OPERADOR ARITMETICO",id.getLexeme(),"");
-                        cont++;
-                    }else if(id.getLexeme().equals("-")){
-                        a.mostrarAutomata("OPERADOR ARITMETICO3","OPERADOR ARITMETICO",id.getLexeme(),"");
-                        cont++;
-                    }else{
-                        a.mostrarAutomata("OPERADOR ARITMETICO4","OPERADOR ARITMETICO",id.getLexeme(),"");
-                        cont++;
-                    }
-                }
-                if(id.getLexicalComp().equals("ERROR_4")){
-                    a.nuevoAutomata(cont,id.getLexeme());
-                    a.mostrarAutomataO("OPERADOR ARITMETICO1");
-                    a.mostrarAutomata("OPERADOR ARITMETICO5","OPERADOR ARITMETICO",id.getLexeme(),"");
                     cont++;
                 }
             }
@@ -2117,7 +2264,6 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem3;

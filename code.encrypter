@@ -1,3 +1,9 @@
-ent vl = 20;
-dec vl = 20.40;
-str flds = 'Hola';
+ent i = 30;
+str f = 'Hola';
+bool g = true;
+dias p = <L>;
+med kjlk = <'Hola',i ,i>;
+/*FALTA ANALISIS SEMÁNTICO*/
+hora hjhds  = <L,L , 20>;
+rutina gfdg = (23,54,23,65);
+rutina dfe = (<23,45,23>,43,23,true);

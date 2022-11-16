@@ -22,14 +22,12 @@ ComentarioDeDocumentacion = "/**" {ContenidoComentario} "*"+ "/"
 Comilla = [']
 Gato = [#]
 Ampersand = [&]
-Punto = [.]
 Coma = [,]
 Simbolo = [ .,=()<>#{}+-;:&]
 Asignacion = [=]
 Delimitador = [;]
-Plus = [+]
-Minus = [-]
-Times = ["*"]
+Mas = [+]
+Menos = [-];
 DosPuntos = [:]
 
 /* Comentario */
@@ -42,7 +40,10 @@ Identificador = {Letra}({Letra}|{Digito})*
 
 /* Número */
 Entero = 0 | [1-9][0-9]*
-Decimal = {Digito}({Digito})*{Punto}{Digito}({Digito})* 
+
+//Incremento y Decremento
+Incremento = ({Mas}{Mas})
+Decremento = ({Menos}{Menos})
 
 /* Cadena */
 ContenidoCadena = ({Espacio}|{Simbolo}|{Letra}|{Digito})*
@@ -59,14 +60,9 @@ Dias2 = (L|M|W|J|V|S|D)
 Error1 = {Letra}({Gato}|{Ampersand})({Letra}|{Digito}|{Gato}|{Ampersand})*
 Error2 = {Comilla}
 Error3 = {Comilla}{ContenidoCadena}
-Error4 = ({Gato}|{Ampersand}|{Punto})({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)*
+Error4 = ({Gato}|{Ampersand}|{Mas}|{Menos})({Gato}*|{Ampersand}{Ampersand}*|{Mas}{Mas}*|{Menos}{Menos}*)({Gato}*|{Ampersand}{Ampersand}*|{Mas}{Mas}*|{Menos}{Menos}*)*
 Error5 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*
-Error6 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}{Digito}({Digito})*|
-         {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}|
-         {Digito}({Digito})*{Punto}|
-         {Digito}({Digito})*{Punto}({Letra}|{Gato}|{Ampersand}|{Digito})({Letra}|{Gato}|{Ampersand}|{Digito})*|
-         {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}{Digito})*{Punto}({Letra}|{Gato}|{Ampersand}|{Digito})({Letra}|{Gato}|{Ampersand}|{Digito})*
-Error7 = {Dias2}{Coma}({Dias2}{Coma})*
+Error6 = {Dias2}{Coma}({Dias2}{Coma})*
 
 %%
 
@@ -81,13 +77,12 @@ Error3 { /*ignorar*/ }
 Error4 { /*ignorar*/ }
 Error5 { /*ignorar*/ }
 Error6 { /*ignorar*/ }
-Error7 { /*ignorar*/ }
 
 // Valores
-{Entero} | {Decimal} | {Hora} | {Dias} | true | false { return textColor(yychar, yylength(), new Color(245, 169, 127)); }
+{Entero} | {Hora} | {Dias} | true | false { return textColor(yychar, yylength(), new Color(245, 169, 127)); }
 
 //Tipos de datos
-ent | dec | med | str | hora | dias | rutina | bool { return textColor(yychar, yylength(), new Color(138, 173, 244)); }
+ent | med | str | hora | dias | rutina | bool { return textColor(yychar, yylength(), new Color(138, 173, 244)); }
 
 // Control
 while | for | if | else | ifnot { return textColor(yychar, yylength(), new Color(166, 218, 149)); }
@@ -96,10 +91,7 @@ while | for | if | else | ifnot { return textColor(yychar, yylength(), new Color
 \?{Identificador} { return textColor(yychar, yylength(), new Color(237, 135, 150)); }
 
 // Operadores lógicos
-"&&" | "|" | "!" | "!=" | "==" { return textColor(yychar, yylength(), new Color(238, 212, 159)); }
-
-// Operadores aritméticos
-{Plus} | {Minus} | {Times} | {Asignacion} { return textColor(yychar, yylength(), new Color(245, 194, 231)); }
+"&&" | "|" | "!" | "!=" | "==" | {Incremento} | {Decremento} { return textColor(yychar, yylength(), new Color(238, 212, 159)); }
 
 //Cadena
 {Comilla}{ContenidoCadena}{Comilla} { return textColor(yychar, yylength(), new Color(137, 220, 235)); }

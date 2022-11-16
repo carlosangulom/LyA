@@ -22,14 +22,12 @@ ComentarioDeDocumentacion = "/**" {ContenidoComentario} "*"+ "/"
 Comilla = [']
 Gato = [#]
 Ampersand = [&]
-Punto = [.]
 Coma = [,]
 Simbolo = [ .,=()<>#{}+-;:&]
 Asignacion = [=]
 Delimitador = [;]
-Plus = [+]
-Minus = [-]
-Times = ["*"]
+Mas = [+]
+Menos = [-];
 DosPuntos = [:]
 
 /* Comentario */
@@ -42,7 +40,6 @@ Identificador = {Letra}({Letra}|{Digito})*
 
 /* Números */
 Entero = {Digito}({Digito})*
-Decimal = {Digito}({Digito})*{Punto}{Digito}({Digito})* 
 
 /* Cadena */
 ContenidoCadena = ({Espacio}|{Simbolo}|{Letra}|{Digito})*
@@ -51,6 +48,9 @@ ContenidoCadena = ({Espacio}|{Simbolo}|{Letra}|{Digito})*
 Hora = ([0-1]?[0-9]|2[0-3]):[0-5][0-9]
 Hora2 = (2[4]):[0][0]
 
+//Incremento y Decremento
+Incremento = ({Mas}{Mas})
+Decremento = ({Menos}{Menos})
 
 //Días
 Dias = (L|M|W|J|V|S|D)(\s*,\s*(L|M|W|J|V|S|D))*
@@ -60,14 +60,9 @@ Dias2 = (L|M|W|J|V|S|D)
 Error1 = {Letra}({Gato}|{Ampersand})({Letra}|{Digito}|{Gato}|{Ampersand})*
 Error2 = {Comilla}
 Error3 = {Comilla}{ContenidoCadena}
-Error4 = ({Gato}|{Ampersand}|{Punto})({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)({Gato}*|{Ampersand}{Ampersand}*|{Punto}*)*
+Error4 = ({Gato}|{Ampersand}|{Mas}|{Menos})({Gato}*|{Ampersand}{Ampersand}*|{Mas}{Mas}*|{Menos}{Menos}*)({Gato}*|{Ampersand}{Ampersand}*|{Mas}{Mas}*|{Menos}{Menos}*)*
 Error5 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*
-Error6 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}{Digito}({Digito})*|
-         {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*{Punto}|
-         {Digito}({Digito})*{Punto}|
-         {Digito}({Digito})*{Punto}({Letra}|{Gato}|{Ampersand}|{Digito})({Letra}|{Gato}|{Ampersand}|{Digito})*|
-         {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}{Digito})*{Punto}({Letra}|{Gato}|{Ampersand}|{Digito})({Letra}|{Gato}|{Ampersand}|{Digito})*
-Error7 = {Dias2}{Coma}({Dias2}{Coma})*
+Error6 = {Dias2}{Coma}({Dias2}{Coma})*
 
 %%
 /* Comentarios o espacios en blanco */
@@ -75,7 +70,6 @@ Error7 = {Dias2}{Coma}({Dias2}{Coma})*
 
 //Tipos de datos
 ent {return token(yytext(), "TIPO_ENTERO", yyline, yycolumn);} 
-dec {return token(yytext(), "TIPO_DECIMAL", yyline, yycolumn);}
 med {return token(yytext(), "TIPO_MEDICAMENTO", yyline, yycolumn);}
 str {return token(yytext(), "TIPO_CADENA", yyline, yycolumn);}
 bool {return token(yytext(), "TIPO_BOOL", yyline, yycolumn);}
@@ -104,7 +98,10 @@ true | false {return token(yytext(), "BOOL", yyline, yycolumn);}
 
 // Números
 {Entero} {return token(yytext(), "NUMERO_ENTERO", yyline, yycolumn);}
-{Decimal} {return token(yytext(), "NUMERO_DECIMAL", yyline, yycolumn);}
+
+//Incremento y Decremento
+{Incremento} {return token(yytext(), "INCREMENTO", yyline, yycolumn);}
+{Decremento} {return token(yytext(), "DECREMENTO", yyline, yycolumn);}
 
 // Cadena
 {Comilla}{ContenidoCadena}{Comilla} {return token(yytext(), "CADENA", yyline, yycolumn);}
@@ -130,9 +127,6 @@ true | false {return token(yytext(), "BOOL", yyline, yycolumn);}
 // Operadores lógicos
 "&&" | "|" | "!" | "!=" | "==" {return token(yytext(), "OP_LOGICO", yyline, yycolumn);}
 
-// Operadores aritméticos
-{Plus} | {Minus} | {Times} {return token(yytext(), "OP_ARITMETICO", yyline, yycolumn);}
-
 // errores
 {Error1} {return token(yytext(), "ERROR_1", yyline, yycolumn);}
 {Error2} {return token(yytext(), "ERROR_2", yyline, yycolumn);}
@@ -140,6 +134,5 @@ true | false {return token(yytext(), "BOOL", yyline, yycolumn);}
 {Error4} {return token(yytext(), "ERROR_4", yyline, yycolumn);}
 {Error5} {return token(yytext(), "ERROR_5", yyline, yycolumn);}
 {Error6} {return token(yytext(), "ERROR_6", yyline, yycolumn);}
-{Error7} {return token(yytext(), "ERROR_7", yyline, yycolumn);}
 
 . { return token(yytext(), "ERROR_X", yyline, yycolumn); }
