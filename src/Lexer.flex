@@ -26,8 +26,6 @@ Coma = [,]
 Simbolo = [ .,=()<>#{}+-;:&]
 Asignacion = [=]
 Delimitador = [;]
-Mas = [+]
-Menos = [-];
 DosPuntos = [:]
 
 /* Comentario */
@@ -47,10 +45,11 @@ ContenidoCadena = ({Espacio}|{Simbolo}|{Letra}|{Digito})*
 // Horas
 Hora = ([0-1]?[0-9]|2[0-3]):[0-5][0-9]
 Hora2 = (2[4]):[0][0]
-
-//Incremento y Decremento
-Incremento = ({Mas}{Mas})
-Decremento = ({Menos}{Menos})
+Hora3 = (2[4]):[0-9][1-9]
+Hora4 = (2[4]):
+Hora5 = ([0-1]?[0-9]|2[0-3]):[6-9][0-9]
+Hora6 = ([0-1]?[0-9]|2[0-3]):
+Hora7 = ([2][5-9]|[3-9][0-9]):[0-9][0-9]
 
 //Días
 Dias = (L|M|W|J|V|S|D)(\s*,\s*(L|M|W|J|V|S|D))*
@@ -60,9 +59,11 @@ Dias2 = (L|M|W|J|V|S|D)
 Error1 = {Letra}({Gato}|{Ampersand})({Letra}|{Digito}|{Gato}|{Ampersand})*
 Error2 = {Comilla}
 Error3 = {Comilla}{ContenidoCadena}
-Error4 = ({Gato}|{Ampersand}|{Mas}|{Menos})({Gato}*|{Ampersand}{Ampersand}*|{Mas}{Mas}*|{Menos}{Menos}*)({Gato}*|{Ampersand}{Ampersand}*|{Mas}{Mas}*|{Menos}{Menos}*)*
+Error4 = ({Gato}|{Ampersand})({Gato}*|{Ampersand}{Ampersand}*)({Gato}*|{Ampersand}{Ampersand}*)*
 Error5 = {Digito}({Letra}|{Gato}|{Ampersand})({Letra}|{Gato}|{Ampersand}|{Digito})*
 Error6 = {Dias2}{Coma}({Dias2}{Coma})*
+Error7 = {Hora3}|{Hora4}|{Hora5}|{Hora6}
+Error8 = {Hora7}
 
 %%
 /* Comentarios o espacios en blanco */
@@ -99,10 +100,6 @@ true | false {return token(yytext(), "BOOL", yyline, yycolumn);}
 // Números
 {Entero} {return token(yytext(), "NUMERO_ENTERO", yyline, yycolumn);}
 
-//Incremento y Decremento
-{Incremento} {return token(yytext(), "INCREMENTO", yyline, yycolumn);}
-{Decremento} {return token(yytext(), "DECREMENTO", yyline, yycolumn);}
-
 // Cadena
 {Comilla}{ContenidoCadena}{Comilla} {return token(yytext(), "CADENA", yyline, yycolumn);}
 
@@ -134,5 +131,7 @@ true | false {return token(yytext(), "BOOL", yyline, yycolumn);}
 {Error4} {return token(yytext(), "ERROR_4", yyline, yycolumn);}
 {Error5} {return token(yytext(), "ERROR_5", yyline, yycolumn);}
 {Error6} {return token(yytext(), "ERROR_6", yyline, yycolumn);}
+{Error7} {return token(yytext(), "ERROR_7", yyline, yycolumn);}
+{Error8} {return token(yytext(), "ERROR_8", yyline, yycolumn);}
 
 . { return token(yytext(), "ERROR_X", yyline, yycolumn); }

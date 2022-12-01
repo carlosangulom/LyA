@@ -1,9 +1,13 @@
-ent i = 30;
-str f = 'Hola';
-bool g = true;
-dias p = <L>;
-med kjlk = <'Hola',i ,i>;
-/*FALTA ANALISIS SEMÁNTICO*/
-hora hjhds  = <L,L , 20>;
-rutina gfdg = (23,54,23,65);
-rutina dfe = (<23,45,23>,43,23,true);
+ent a = 2;
+str b = 'Pastillero';
+med cad = <b,a,a>;
+bool d = true;
+dias e = <J>;
+hora f = <15:59>;
+rutina g = (cad,e,f,true);
+while(false){
+	<cad>;
+}
+for(ent v = 0 ; v > 4){
+	<g>;	
+};

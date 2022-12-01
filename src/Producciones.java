@@ -11,6 +11,7 @@ import compilerTools.Token;
  * @author chuy4
  */
 public class Producciones {
+    Token Token;
     Token TipoDeDato;
     Token Identificador;
     Token Identificador2;
@@ -39,19 +40,25 @@ public class Producciones {
     Token Parentesis1;
     Token Parentesis2;
     Token For;
-    Token Incremento;
     Token Llave1;
     Token Llave2;
+    Token Llave3;
+    Token Llave4;
     Token Valor1;
     Token Valor2;
     Token OperadorLogico;
     Token While;
-    Producciones Produccion1;
-    Producciones Produccion2;
-    Producciones Produccion3;
-    Producciones Produccion4;
-    Producciones Produccion5;
-    //De Asignacion
+    Token If;
+    Token Else;
+    int contador;
+    //MANDAR A LLAMAR UNA ASIGNACION
+    public Producciones(Token MenorQue,Token Identificador,Token MayorQue,Token Delimitador){
+        this.MenorQue = MenorQue;
+        this.Identificador = Identificador;
+        this.MayorQue = MayorQue;
+        this.Delimitador = Delimitador;
+    }
+    //De Asignacion ENT/BOOL/STR
     public Producciones(Token TipoDeDato,Token Identificador,Token Asignacion,Token ValorDeDato,Token Delimitador){
         this.TipoDeDato = TipoDeDato;
         this.Identificador = Identificador;
@@ -88,7 +95,7 @@ public class Producciones {
         this.Coma3 = Coma3;
         this.Hora4 = Hora4;
         this.Coma4 = Coma4;
-        this.Hora2 = Hora5;
+        this.Hora5 = Hora5;
         this.MayorQue = MayorQue;
         this.Delimitador = Delimitador;
     
@@ -108,7 +115,7 @@ public class Producciones {
         this.MayorQue = MayorQue;
         this.Delimitador = Delimitador;
     }
-    //De Asignacion a Rutina 1
+    //De Asignacion a Rutina
     public Producciones(Token TipoDeDato,Token Identificador,Token Asignacion,Token Parentesis1,Token Medicamento,Token Coma1,Token Dias,Token Coma2,Token Hora,Token Coma3,Token Bool,Token Parentesis2,Token Delimitador){
         this.TipoDeDato = TipoDeDato;
         this.Identificador = Identificador;
@@ -124,30 +131,8 @@ public class Producciones {
         this.Parentesis2 = Parentesis2;
         this.Delimitador = Delimitador;
     }
-    //De Asignacion a Rutina 2
-    public Producciones(Token TipoDeDato,Token Identificador,Token Asignacion,Token Parentesis1,Token MenorQue,Token Cadena,Token Coma1,Token Entero1,Token Coma2,Token Entero2,Token MayorQue,Token Coma3,Token Dias,Token Coma4,Token Hora,Token Coma5,Token Bool,Token Parentesis2,Token Delimitador){
-        this.TipoDeDato = TipoDeDato;
-        this.Identificador = Identificador;
-        this.Asignacion = Asignacion;
-        this.Parentesis1 = Parentesis1;
-        this.MenorQue = MenorQue;
-        this.Cadena = Cadena;
-        this.Coma1 = Coma1;
-        this.Entero1 = Entero1;
-        this.Coma2 = Coma2;
-        this.Entero2 = Entero2;
-        this.MayorQue = MayorQue;
-        this.Coma3 = Coma3;
-        this.Dias = Dias;
-        this.Coma4 = Coma4;
-        this.Hora = Hora;
-        this.Coma5 = Coma5;
-        this.Bool = Bool;
-        this.Parentesis2 = Parentesis2;
-        this.Delimitador = Delimitador;
-    }
     //De Ciclos for
-    Producciones(Token For,Token Parentesis1,Token TipoDeDato,Token Identificador,Token Asignacion,Token ValorDeDato,Token Delimitador,Token Valor1,Token OperadorLogico,Token Valor2,Token Delimitador2,Token Identificador2,Token Incremento,Token Parentesis2,Token Llave1,Producciones Produccion1,Producciones Produccion2,Producciones Produccion3,Producciones Produccion4,Producciones Produccion5,Token Llave2){
+    Producciones(Token For,Token Parentesis1,Token TipoDeDato,Token Identificador,Token Asignacion,Token ValorDeDato,Token Delimitador,Token Valor1,Token OperadorLogico,Token Valor2,Token Parentesis2,Token Llave1,Token Llave2,Token Delimitador2){
         this.For = For;
         this.Parentesis1 = Parentesis1;
         this.TipoDeDato = TipoDeDato;
@@ -158,35 +143,45 @@ public class Producciones {
         this.Valor1 = Valor1;
         this.OperadorLogico = OperadorLogico;
         this.Valor2 = Valor2;
-        this.Delimitador2 = Delimitador2;
-        this.Identificador2 = Identificador2;
-        this.Incremento = Incremento;
         this.Parentesis2 = Parentesis2;
         this.Llave1 = Llave1;
-        this.Produccion1 = Produccion1;
-        this.Produccion2 = Produccion2;
-        this.Produccion3 = Produccion3;
-        this.Produccion4 = Produccion4;
-        this.Produccion5 = Produccion5;
         this.Llave2 = Llave2;
+        this.Delimitador2 = Delimitador2;
     }
     //De Ciclos while
-     Producciones(Token While,Token Parentesis1,Token Valor1,Token OperadorLogico,Token Valor2,Token Parentesis2,Token Llave1,Producciones Produccion1,Producciones Produccion2,Producciones Produccion3,Producciones Produccion4,Producciones Produccion5,Token Identificador,Token Incremento,Token Delimitador,Token Llave2){
+     Producciones(Token While,Token Parentesis1,Token Valor1,Token Parentesis2,Token Llave1,Token Llave2){
         this.While = While;
+        this.Parentesis1 = Parentesis1;
+        this.Valor1 = Valor1;
+        this.Parentesis2 = Parentesis2;
+        this.Llave1 = Llave1;
+        this.Llave2 = Llave2;
+    }
+    //DE CONDICIONAL IF SOLO IF/IFNOT
+    Producciones(Token If,Token Parentesis1,Token Valor1,Token OperadorLogico,Token Valor2,Token Parentesis2,Token Llave1,Token Llave2,Token Delimitador){
+        this.If = If;
         this.Parentesis1 = Parentesis1;
         this.Valor1 = Valor1;
         this.OperadorLogico = OperadorLogico;
         this.Valor2 = Valor2;
         this.Parentesis2 = Parentesis2;
         this.Llave1 = Llave1;
-        this.Produccion1 = Produccion1;
-        this.Produccion2 = Produccion2;
-        this.Produccion3 = Produccion3;
-        this.Produccion4 = Produccion4;
-        this.Produccion5 = Produccion5;
-        this.Identificador = Identificador;
-        this.Incremento = Incremento;
-        this.Delimitador= Delimitador;
         this.Llave2 = Llave2;
+        this.Delimitador = Delimitador;
     }
+    //DE CONDICIONAL IF/IFNOT CON ELSE
+    Producciones(Token If,Token Parentesis1,Token Valor1,Token OperadorLogico,Token Valor2,Token Parentesis2,Token Llave1,Token Llave2,Token Else,Token Llave3,Token Llave4,Token Delimitador){
+        this.If = If;
+        this.Parentesis1 = Parentesis1;
+        this.Valor1 = Valor1;
+        this.OperadorLogico = OperadorLogico;
+        this.Valor2 = Valor2;
+        this.Parentesis2 = Parentesis2;
+        this.Llave1 = Llave1;
+        this.Llave2 = Llave2;
+        this.Else = Else;
+        this.Llave3 = Llave3;
+        this.Llave4 = Llave4;
+        this.Delimitador = Delimitador;
+    } 
 }
