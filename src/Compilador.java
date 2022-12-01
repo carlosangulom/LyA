@@ -86,6 +86,7 @@ public class Compilador extends javax.swing.JFrame {
     File archivo;
     FileInputStream entrada;
     FileOutputStream salida;
+    private Object[] cuadruplo;
     
     /**
      * Creates new form Compilador
@@ -151,6 +152,7 @@ public class Compilador extends javax.swing.JFrame {
         PD1A = new ArrayList<>();
         TT = new TablaDeTokens();
         P = new Pilas();
+        cuadruplo = new Object[4];
         Functions.setAutocompleterJTextComponent(new String[]{}, jtpCode, () -> {
             timerKeyReleased.restart();
         });
@@ -209,6 +211,8 @@ public class Compilador extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblTokens = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        Cuadruplos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         CodObjeto = new javax.swing.JTextArea();
@@ -551,7 +555,7 @@ public class Compilador extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -566,15 +570,31 @@ public class Compilador extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 102, 102));
 
+        Cuadruplos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Operador", "Argumento 1", "Argumento 2", "Resultado"
+            }
+        ));
+        jScrollPane6.setViewportView(Cuadruplos);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Código Intermedio", jPanel4);
@@ -593,7 +613,7 @@ public class Compilador extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -620,7 +640,7 @@ public class Compilador extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -652,15 +672,15 @@ public class Compilador extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 288, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))
                     .addGroup(rootPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTabbedPane1)
-                        .addContainerGap())))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelTextSizeConsole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -691,7 +711,7 @@ public class Compilador extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTabbedPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelButtonTextSize1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
@@ -4617,6 +4637,15 @@ public class Compilador extends javax.swing.JFrame {
             Functions.addRowDataInTable(tblTokens, data);
             Functions.addRowDataInTable(TT.Tabla(), data);
         });
+    }
+    
+    public void cuadruplos(String operador,String argumento1,String argumento2,String resultado){    
+        cuadruplo[0] = operador;
+        cuadruplo[1] = argumento1;
+        cuadruplo[2] = argumento2;
+        cuadruplo[3] = resultado;
+        
+        Functions.addRowDataInTable(Cuadruplos, cuadruplo);
     }
     
     private void identificadores(){
@@ -13559,6 +13588,7 @@ public class Compilador extends javax.swing.JFrame {
          int contadorP = 0;
          int numP = 0;
          String numeroPastillero = "";
+         int temp = 0;
         CodArduino.append("//Librerias \n" +
                           "#include <Wire.h> // must be included here so that Arduino library object file references work\n" +
                           "#include <RtcDS1307.h>\n" +
@@ -13667,6 +13697,12 @@ public class Compilador extends javax.swing.JFrame {
                                     }
                                 }
                             }
+                            temp++;
+                            cuadruplos("=",identificador,"","T"+temp);
+                            temp++;
+                            cuadruplos("+",valor,"T"+(temp-1),"T"+temp);
+                            temp++;
+                            cuadruplos("=","T"+(temp-1),"",identificador);
                             jtaOutputConsole.append("-->   Se le ha asignado un nuevo tipo de dato al identificador " + identificador + ", el tipo ent, con el siguiente valor: " + valor + " .........\n");
                         }
                         if(sentence.startsWith("str")){
@@ -13680,6 +13716,12 @@ public class Compilador extends javax.swing.JFrame {
                                     }
                                 }
                             }
+                            temp++;
+                            cuadruplos("=",identificador,"","T"+temp);
+                            temp++;
+                            cuadruplos("+",valor,"T"+(temp-1),"T"+temp);
+                            temp++;
+                            cuadruplos("=","T"+(temp-1),"",identificador);
                             jtaOutputConsole.append("-->   Se le ha asignado un nuevo tipo de dato al identificador " + identificador + ", el tipo str, con el siguiente valor: " + valor + " .........\n");
                         }
                         if(sentence.startsWith("med")){
@@ -13740,6 +13782,12 @@ public class Compilador extends javax.swing.JFrame {
                                     }
                                 }
                             }
+                            temp++;
+                            cuadruplos("=",identificador,"","T"+temp);
+                            temp++;
+                            cuadruplos("+",valor,"T"+(temp-1),"T"+temp);
+                            temp++;
+                            cuadruplos("=","T"+(temp-1),"",identificador);
                             jtaOutputConsole.append("-->   Se le ha asignado un nuevo tipo de dato al identificador " + identificador + ", el tipo bool, con el siguiente valor: " + valor + " .........\n");
                         }
                         if(sentence.startsWith("dias")){
@@ -13834,6 +13882,7 @@ public class Compilador extends javax.swing.JFrame {
                             String valor2 = "";
                             String identificador = "";
                             String estado = "";
+                            String med = "";
                             for(Producciones id: PD1){
                                 if(id.For != null && id.TipoDeDato != null){
                                     valor1 = id.ValorDeDato.getLexeme();
@@ -13855,6 +13904,7 @@ public class Compilador extends javax.swing.JFrame {
                                 if(id.TipoDeDato != null){
                                     if(id.TipoDeDato.getLexeme().equals("rutina")){
                                         identificador = id.Identificador.getLexeme();
+                                        med = pastillero.get(id.Medicamento.getLexeme());
                                         if(id.Bool.getLexicalComp().equals("IDENTIFICADOR")){
                                             
                                         }else{
@@ -13869,7 +13919,7 @@ public class Compilador extends javax.swing.JFrame {
                             }else{
                                 if(estado.equals("true")){
                                     Arduino.add("\n    //Metodo de alarma(Lapzo de horas,minutos)\n" +
-                                                "    suenaAlarma1("+ hora +","+ minutos +");\n}");
+                                                "    suenaAlarma1("+ med +","+ hora +","+ minutos +");\n}");
                                 }else{
 
                                 }
@@ -13930,29 +13980,54 @@ public class Compilador extends javax.swing.JFrame {
                     "}\n" +
                     "\n" +
                     "\n" +
-                    "//Metodo para crear una RUTINA\n" +
-                    "void suenaAlarma1(int horas, int minutos){\n" +
+                    "void suenaAlarma1(int pastilla,int horas, int minutos){\n" +
                     "  int cont=0;\n" +
                     "  RtcDateTime now = Rtc.GetDateTime();\n" +
                     "  if(isScheduledON1(now,horas,minutos)){\n" +
                     "     digitalWrite(alarmapin,true);\n" +
                     "     float frecuencia=map(150,0,1023,100,1000);\n" +
                     "     tone(alarmapin,frecuencia,600);\n" +
-                    "     \n" +
                     "     delay(500);\n" +
+                    "\n" +
+                    "     if(pastilla==1){\n" +
                     "     if(cont<1){\n" +
-                    "     if(pastillero3<1){\n" +
+                    "     if(pastillero1<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
-                    "        myStepper.step(75);\n" +
-                    "        delay(500);\n" +
-                    "        pastillero3++;       \n" +
+                    "        myStepper.step(0);\n" +
+                    "        delay(1500);\n" +
+                    "        pastillero1++;       \n" +
                     "     disp.write(100);\n" +
                     "     delay(600);\n" +
                     "     disp.write(180);\n" +
                     "     \n" +
                     "     if(regreso<1){  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
-                    "        myStepper.step(-75);\n" +
+                    "        myStepper.step(0);\n" +
+                    "        //delay(2500);\n" +
+                    "        regreso++;\n" +
+                    "      }\n" +
+                    "      digitalWrite(motobombapin, HIGH);   // turn the LED on (HIGH is the voltage level)\n" +
+                    "      delay(2000);\n" +
+                    "      regreso=0;\n" +
+                    "      }\n" +
+                    "     }\n" +
+                    "      cont++;\n" +
+                    "     }\n" +
+                    "\n" +
+                    "     if(pastilla==2){\n" +
+                    "     if(cont<1){\n" +
+                    "     if(pastillero2<1){\n" +
+                    "      Serial.println(\"clockwise\");\n" +
+                    "        myStepper.step(25);\n" +
+                    "        delay(1500);\n" +
+                    "        pastillero2++;       \n" +
+                    "     disp.write(100);\n" +
+                    "     delay(600);\n" +
+                    "     disp.write(180);\n" +
+                    "     \n" +
+                    "     if(regreso<1){  \n" +
+                    "      Serial.println(\"counterclockwise\");\n" +
+                    "        myStepper.step(-25);\n" +
                     "        delay(2500);\n" +
                     "        regreso++;\n" +
                     "      }\n" +
@@ -13960,8 +14035,135 @@ public class Compilador extends javax.swing.JFrame {
                     "      delay(2000);\n" +
                     "      regreso=0;\n" +
                     "      }\n" +
+                    "     }\n" +
                     "      cont++;\n" +
                     "     }\n" +
+                    "\n" +
+                    "     if(pastilla==3){\n" +
+                    "     if(cont<1){\n" +
+                    "     if(pastillero3<1){\n" +
+                    "      Serial.println(\"clockwise\");\n" +
+                    "        myStepper.step(50);\n" +
+                    "        delay(1500);\n" +
+                    "        pastillero3++;       \n" +
+                    "     disp.write(100);\n" +
+                    "     delay(600);\n" +
+                    "     disp.write(180);\n" +
+                    "     \n" +
+                    "     if(regreso<1){  \n" +
+                    "      Serial.println(\"counterclockwise\");\n" +
+                    "        myStepper.step(-50);\n" +
+                    "        delay(2500);\n" +
+                    "        regreso++;\n" +
+                    "      }\n" +
+                    "      digitalWrite(motobombapin, HIGH);   // turn the LED on (HIGH is the voltage level)\n" +
+                    "      delay(2000);\n" +
+                    "      regreso=0;\n" +
+                    "      }\n" +
+                    "     }\n" +
+                    "      cont++;\n" +
+                    "     }\n" +
+                    "\n" +
+                    "     if(pastilla==4){\n" +
+                    "     if(cont<1){\n" +
+                    "     if(pastillero4<1){\n" +
+                    "      Serial.println(\"clockwise\");\n" +
+                    "        myStepper.step(75);\n" +
+                    "        delay(1500);\n" +
+                    "        pastillero4++;       \n" +
+                    "     disp.write(100);\n" +
+                    "     delay(600);\n" +
+                    "     disp.write(180);\n" +
+                    "     \n" +
+                    "     //if(regreso<1){  \n" +
+                    "      Serial.println(\"counterclockwise\");\n" +
+                    "        myStepper.step(-75);\n" +
+                    "        //delay(2500);\n" +
+                    "        //regreso++;\n" +
+                    "      //}\n" +
+                    "      digitalWrite(motobombapin, HIGH);   // turn the LED on (HIGH is the voltage level)\n" +
+                    "      delay(2000);\n" +
+                    "      //regreso=0;\n" +
+                    "      }\n" +
+                    "     }\n" +
+                    "      cont++;\n" +
+                    "     }\n" +
+                    "\n" +
+                    "     if(pastilla==5){\n" +
+                    "     if(cont<1){\n" +
+                    "     if(pastillero5<1){\n" +
+                    "      Serial.println(\"clockwise\");\n" +
+                    "        myStepper.step(100);\n" +
+                    "        delay(1500);\n" +
+                    "        pastillero5++;       \n" +
+                    "     disp.write(100);\n" +
+                    "     delay(600);\n" +
+                    "     disp.write(180);\n" +
+                    "     \n" +
+                    "     if(regreso<1){  \n" +
+                    "      Serial.println(\"counterclockwise\");\n" +
+                    "        myStepper.step(-100);\n" +
+                    "        delay(2500);\n" +
+                    "        regreso++;\n" +
+                    "      }\n" +
+                    "      digitalWrite(motobombapin, HIGH);   // turn the LED on (HIGH is the voltage level)\n" +
+                    "      delay(2000);\n" +
+                    "      regreso=0;\n" +
+                    "      }\n" +
+                    "     }\n" +
+                    "      cont++;\n" +
+                    "     }\n" +
+                    "\n" +
+                    "     if(pastilla==6){\n" +
+                    "     if(cont<1){\n" +
+                    "     if(pastillero6<1){\n" +
+                    "      Serial.println(\"clockwise\");\n" +
+                    "        myStepper.step(125);\n" +
+                    "        delay(1500);\n" +
+                    "        pastillero6++;       \n" +
+                    "     disp.write(100);\n" +
+                    "     delay(600);\n" +
+                    "     disp.write(180);\n" +
+                    "     \n" +
+                    "     if(regreso<1){  \n" +
+                    "      Serial.println(\"counterclockwise\");\n" +
+                    "        myStepper.step(-125);\n" +
+                    "        delay(2500);\n" +
+                    "        regreso++;\n" +
+                    "      }\n" +
+                    "      digitalWrite(motobombapin, HIGH);   // turn the LED on (HIGH is the voltage level)\n" +
+                    "      delay(2000);\n" +
+                    "      regreso=0;\n" +
+                    "      }\n" +
+                    "     }\n" +
+                    "      cont++;\n" +
+                    "     }\n" +
+                    "\n" +
+                    "     if(pastilla==7){\n" +
+                    "     if(cont<1){\n" +
+                    "     if(pastillero7<1){\n" +
+                    "      Serial.println(\"clockwise\");\n" +
+                    "        myStepper.step(150);\n" +
+                    "        delay(1500);\n" +
+                    "        pastillero7++;       \n" +
+                    "     disp.write(100);\n" +
+                    "     delay(600);\n" +
+                    "     disp.write(180);\n" +
+                    "     \n" +
+                    "     if(regreso<1){  \n" +
+                    "      Serial.println(\"counterclockwise\");\n" +
+                    "        myStepper.step(-150);\n" +
+                    "        delay(2500);\n" +
+                    "        regreso++;\n" +
+                    "      }\n" +
+                    "      digitalWrite(motobombapin, HIGH);   // turn the LED on (HIGH is the voltage level)\n" +
+                    "      delay(500);\n" +
+                    "      regreso=0;\n" +
+                    "      }\n" +
+                    "     }\n" +
+                    "      cont++;\n" +
+                    "     }\n" +
+                    "\n" +
                     "     digitalWrite(motobombapin, LOW);\n" +
                     "     //Proyectar en el lcd la hora y fecha  \n" +
                     "    lcd.clear();\n" +
@@ -13980,121 +14182,83 @@ public class Compilador extends javax.swing.JFrame {
                     "  if(pastillero1<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(0);\n" +
-                    "      delay(500);\n" +
+                    "      delay(3500);\n" +
                     "      pastillero1++; \n" +
-                    "  if(regreso<1){  \n" +
+                    "  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
                     "        myStepper.step(0);\n" +
-                    "        delay(3000);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "  }\n" +
                     "  }\n" +
                     "  if(pastillero==2){\n" +
                     "  if(pastillero2<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(25);\n" +
-                    "      delay(500);\n" +
+                    "      delay(4500);\n" +
                     "      pastillero2++; \n" +
-                    "  if(regreso<1){  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
                     "        myStepper.step(-25);\n" +
-                    "        delay(3000);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "  }\n" +
                     "  }\n" +
                     "  if(pastillero==3){\n" +
                     "  if(pastillero3<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(50);\n" +
-                    "      delay(500);\n" +
+                    "      delay(4500);\n" +
                     "      pastillero3++; \n" +
-                    "  if(regreso<1){  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
                     "        myStepper.step(-50);\n" +
-                    "        delay(3500);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "        delay(2500);\n" +
+                    "  }\n" +
                     "  }\n" +
                     "  if(pastillero==4){\n" +
                     "  if(pastillero4<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(75);\n" +
-                    "      delay(500);\n" +
-                    "      pastillero4++; \n" +
-                    "  if(regreso<1){  \n" +
+                    "      delay(4500);\n" +
+                    "      pastillero4++;  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
                     "        myStepper.step(-75);\n" +
-                    "        delay(3500);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "  }\n" +
                     "  }\n" +
                     "  if(pastillero==5){\n" +
                     "  if(pastillero5<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(100);\n" +
-                    "      delay(500);\n" +
+                    "      delay(4500);\n" +
                     "      pastillero5++; \n" +
-                    "  if(regreso<1){  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
                     "        myStepper.step(-100);\n" +
-                    "        delay(3500);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "  }\n" +
                     "  }\n" +
                     "  if(pastillero==6){\n" +
                     "  if(pastillero6<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(125);\n" +
-                    "      delay(500);\n" +
+                    "      delay(4500);\n" +
                     "      pastillero6++; \n" +
-                    "  if(regreso<1){  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
-                    "        myStepper.step(-125);\n" +
-                    "        delay(3500);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "        myStepper.step(-125);        \n" +
+                    "  }\n" +
                     "  }\n" +
                     "  if(pastillero==7){\n" +
                     "  if(pastillero7<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(150);\n" +
-                    "      delay(500);\n" +
+                    "      delay(4500);\n" +
                     "      pastillero7++; \n" +
-                    "  if(regreso<1){  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
                     "        myStepper.step(-150);\n" +
-                    "        delay(3500);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "  }\n" +
                     "  }\n" +
                     "  if(pastillero==8){\n" +
                     "  if(pastillero8<1){\n" +
                     "      Serial.println(\"clockwise\");\n" +
                     "      myStepper.step(175);\n" +
-                    "      delay(500);\n" +
+                    "      delay(4500);\n" +
                     "      pastillero8++; \n" +
-                    "  if(regreso<1){  \n" +
                     "      Serial.println(\"counterclockwise\");\n" +
                     "        myStepper.step(-175);\n" +
-                    "        delay(3500);\n" +
-                    "        regreso++;\n" +
-                    "      }\n" +
-                    "      regreso=0;\n" +
-                    "      }\n" +
+                    "  }     \n" +
                     "  }\n" +
                     "}");
         for(int i = 0; i< Arduino.size();i++){
@@ -14176,6 +14340,7 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem CL4;
     private javax.swing.JTextArea CodArduino;
     private javax.swing.JTextArea CodObjeto;
+    private javax.swing.JTable Cuadruplos;
     private javax.swing.JButton btnAbrir;
     private javax.swing.JButton btnCompilar;
     private javax.swing.JButton btnConsoleMinus;
@@ -14261,6 +14426,7 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;

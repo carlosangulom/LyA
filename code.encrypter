@@ -3,7 +3,7 @@ str b = 'Pastillero';
 med cad = <b,a,a>;
 bool d = true;
 dias e = <J>;
-hora f = <15:59>;
+hora f = <16:59>;
 rutina g = (cad,e,f,true);
 while(false){
 	<cad>;
