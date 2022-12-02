@@ -213,9 +213,6 @@ public class Compilador extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         Cuadruplos = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        CodObjeto = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         CodArduino = new javax.swing.JTextArea();
@@ -598,33 +595,6 @@ public class Compilador extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Código Intermedio", jPanel4);
-
-        jPanel3.setBackground(new java.awt.Color(255, 102, 102));
-
-        CodObjeto.setColumns(20);
-        CodObjeto.setRows(5);
-        CodObjeto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        CodObjeto.setEnabled(false);
-        jScrollPane4.setViewportView(CodObjeto);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Código Objeto", jPanel3);
 
         jPanel2.setBackground(new java.awt.Color(255, 102, 102));
 
@@ -13764,7 +13734,6 @@ public class Compilador extends javax.swing.JFrame {
                                     if(id.TipoDeDato != null){
                                         if(id.TipoDeDato.getLexeme().equals("med")){
                                             identificador = id.Identificador.getLexeme();
-                                            
                                         }
                                     }
                                 }
@@ -13887,7 +13856,7 @@ public class Compilador extends javax.swing.JFrame {
                                 if(id.For != null && id.TipoDeDato != null){
                                     valor1 = id.ValorDeDato.getLexeme();
                                     if(id.Valor2.getLexicalComp().equals("IDENTIFICADOR")){
-                                        
+                                        valor2 = identificadores1.get(id.Valor2.getLexeme());
                                     }else{
                                         valor2 = id.Valor2.getLexeme();
                                     }
@@ -13906,7 +13875,7 @@ public class Compilador extends javax.swing.JFrame {
                                         identificador = id.Identificador.getLexeme();
                                         med = pastillero.get(id.Medicamento.getLexeme());
                                         if(id.Bool.getLexicalComp().equals("IDENTIFICADOR")){
-                                            
+                                            estado = identificadores1.get(id.Bool.getLexeme());
                                         }else{
                                             estado = id.Bool.getLexeme();
                                         }
@@ -14339,7 +14308,6 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem CL3;
     private javax.swing.JMenuItem CL4;
     private javax.swing.JTextArea CodArduino;
-    private javax.swing.JTextArea CodObjeto;
     private javax.swing.JTable Cuadruplos;
     private javax.swing.JButton btnAbrir;
     private javax.swing.JButton btnCompilar;
@@ -14419,12 +14387,10 @@ public class Compilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JPopupMenu.Separator jSeparator1;

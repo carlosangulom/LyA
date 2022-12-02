@@ -1,13 +1,13 @@
 ent a = 2;
 str b = 'Pastillero';
 med cad = <b,a,a>;
-bool d = true;
+bool d = false;
 dias e = <J>;
-hora f = <16:59>;
+hora f = <17:59>;
 rutina g = (cad,e,f,true);
-while(false){
+while(d){
 	<cad>;
 }
-for(ent v = 0 ; v > 4){
+for(ent v = 0 ; v > a){
 	<g>;	
 };
